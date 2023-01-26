@@ -1,0 +1,35 @@
+PL:
+
+1. Considering experience in coding (in years) among all the respondents, which group has the biggest
+share?
+    The people who responded 5-9 years have the biggest share at 29.28%.
+
+2. Considering the developer type among all the respondents, which group has the largest share?
+    Full-stack developers have the largest share at 46.82%.
+
+3. What are the top three countries from which respondents come from?
+    The United States, India, and Germany in that order.
+
+4. What percentage of respondents are men vs. women?
+    91.88% were men while only 5.17% were women.
+
+5. For how many consecutive years, Javascript has become the most popular PL?
+    JavaScript has been the most popular programming language for ten years now.
+
+6. What are the top five most popular database technologies?
+    MySQL, PostgresSQL, SQLite, MongoDB, and Microsoft SQL Server in that order.
+
+7. What are the top five most popular web frameworks and technologies?  Specify which PL aligns with each of these frameworks and technologies.
+    Node.js (aligns with JavaScript), React.js (algins with JavaScript), jQuery (aligns with JavaScript), Express (aligns with JavaScript), Angular (aligns with TypeScript and AngularJS).
+
+8. What are the top five most popular IDEs?
+    Visual Studio Code, Visual Studio, IntelliJ, Notepad++, and Vim in that order.
+
+9. What are the top five most loved PLs?
+    Rust, Elixir, Clojure, TypeScript, and Julia
+
+10. What are the top five most dreaded PLs?
+    MATLAB, COBOL, VBA, Objective-C, and Fortran
+
+11. What are the top five highest paying PLs? Specify the major programming paradigm that each of these PLs support.
+    Clojure (used mostly as Functional Programming), Erlang (used mostly as Functional and Concurrent Programming), F# (used mostly as Functional Programming), LISP (used mostly as Functional Programming), and Ruby (used mostly as Object-Oriented Programing)

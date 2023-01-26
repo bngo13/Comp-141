@@ -1,0 +1,19 @@
+Java: 
+
+1. What is the name of Java compiler program in Unix-based systems
+	javac
+2. How it can be invoked to produce the bytecode?
+	javac (filename)
+
+	for example
+		javac a.java -> a.class		
+3. What is the Java bytecode file’s extension?
+	.class
+4. What is the name of Java interpreter program in Unix-based systems
+	java
+5. How it can be invoked to execute the bytecode?
+	java (filename without .class)
+		original .java does not need to be in the folder with the .class
+	for example
+		javac a.java 
+		java a
