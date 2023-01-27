@@ -1,0 +1,13 @@
+GCC:
+
+1 GCC can be used to compile a C program to object files and link them into an executable, in a single step
+	gcc hello.c
+2 GCC can directly compile the source code to object files
+	gcc -c hello.c
+3 GCC includes the capability to invoke the linker that collects a bunch of object files into an executable.
+	gcc hello.o
+4 GCC can compile the source code to Assembly language.
+	gcc -S hello.c
+5  GCC includes the capability to invoke the assembler that translates the Assembly code into object files.  
+	gcc -c hello.s
+
