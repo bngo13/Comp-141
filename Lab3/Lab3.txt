@@ -1,0 +1,49 @@
+1
+
+    Readability:
+        /**/ would be preferred. This syntax allows us to create blocks of comments rather than one liners, making it look more organized.
+    Writability:
+        // would be preferred. This syntax is easier to actually write, specifically for small comments. it is also the exact same key, just pressed twice.
+    Reliability:
+        /**/ would be preferred. This syntax has a lot more versatility. For example, comment blocks, docs, and small comments.
+2.
+
+    Syntax Conciseness:
+        Implicitly typed programming languages provide more syntax conciseness. Explicitly typed languages make syntax less concise, as you have to actually declare the type of variable.
+    Maintainability:
+        Explicitly typed languages are more maintainable because the types will not change without you making explicit change. For implicit typed languages, the types may change if the language gets updated. For example, i32 to i64. In implicitly-typed languages, it will not tell you.
+    Expressiveness:
+        Explicit languages are very clear on what data types you are using, because you declare them. In implicitly-typed languages, they are not expressive because you did not explicitly decare them.
+3
+
+    1: C++ Result:
+        3
+        265775979
+
+    2: Java Result:
+        3
+        Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: Index 4 out of bounds for length 3
+        at Main.main(Main.java:6)
+
+    3: Inference
+        C++ is less semantically safe than Java. When indexing an array in C++, out of bound cases are undetected, while in Java it is.
+4
+
+    Python:
+        update every year
+        https://www.python.org/downloads/
+    Java
+        update very two years
+        https://www.oracle.com/java/technologies/java-se-support-roadmap.html#:~:text=For%20product%20releases%20after%20Java,Java%2021%20in%20September%202023.
+    Haskell
+        updated roughly once per month
+        https://www.haskell.org/ghc/blog.html
+    ML
+        updates are not consistent. longest time without an update was 4 months. Average update period is around a month
+        https://www.smlnj.org/
+    Clojure
+        updates every two months
+        https://clojure.org/releases/devchangelog
+    Lua
+        update intervals have been increasing. last interval was 6 years.
+        https://www.lua.org/versions.html
