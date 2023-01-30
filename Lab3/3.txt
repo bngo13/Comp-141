@@ -1,0 +1,13 @@
+3
+
+    1: C++ Result:
+        3
+        265775979
+
+    2: Java Result:
+        3
+        Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: Index 4 out of bounds for length 3
+        at Main.main(Main.java:6)
+
+    3: Inference
+        C++ is less semantically safe than Java. When indexing an array in C++, out of bound cases are undetected, while in Java it is.

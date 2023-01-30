@@ -1,0 +1,8 @@
+1
+
+    Readability:
+        /**/ would be preferred. This syntax allows us to create blocks of comments rather than one liners, making it look more organized.
+    Writability:
+        // would be preferred. This syntax is easier to actually write, specifically for small comments. it is also the exact same key, just pressed twice.
+    Reliability:
+        /**/ would be preferred. This syntax has a lot more versatility. For example, comment blocks, docs, and small comments.

@@ -1,0 +1,8 @@
+2.
+
+    Syntax Conciseness:
+        Implicitly typed programming languages provide more syntax conciseness. Explicitly typed languages make syntax less concise, as you have to actually declare the type of variable.
+    Maintainability:
+        Explicitly typed languages are more maintainable because the types will not change without you making explicit change. For implicit typed languages, the types may change if the language gets updated. For example, i32 to i64. In implicitly-typed languages, it will not tell you.
+    Expressiveness:
+        Explicit languages are very clear on what data types you are using, because you declare them. In implicitly-typed languages, they are not expressive because you did not explicitly decare them.

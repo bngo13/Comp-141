@@ -1,0 +1,20 @@
+4
+
+    Python:
+        update every year
+        https://www.python.org/downloads/
+    Java
+        update very two years
+        https://www.oracle.com/java/technologies/java-se-support-roadmap.html#:~:text=For%20product%20releases%20after%20Java,Java%2021%20in%20September%202023.
+    Haskell
+        updated roughly once per month
+        https://www.haskell.org/ghc/blog.html
+    ML
+        updates are not consistent. longest time without an update was 4 months. Average update period is around a month
+        https://www.smlnj.org/
+    Clojure
+        updates every two months
+        https://clojure.org/releases/devchangelog
+    Lua
+        update intervals have been increasing. last interval was 6 years.
+        https://www.lua.org/versions.html
