@@ -1,0 +1,12 @@
+1.
+    expr -> expr == expr
+        -> expr Ʌ expr == expr
+        -> expr Ʌ expr V expr == true
+        -> !expr Ʌ expr V expr == true
+        -> !true Ʌ false V true == true
+2.
+    expr -> expr Ʌ expr
+         -> !expr Ʌ expr
+         -> !true Ʌ expr V expr
+         -> !true Ʌ false V expr == expr
+         -> !true Ʌ false V true == true

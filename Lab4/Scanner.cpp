@@ -8,13 +8,63 @@ int main() {
     string input;
     cin >> input;
 
-    regex int_reg("[0-9]*");
-    regex punct_reg("[+,*,(,),.]+");
+
+    regex int_reg("^(!-)?[0-9]*$");
+    regex punct_reg("^[+,*,(,),.]$");
 
     if (regex_search(input, int_reg)) {
-        cout << "a" << endl;
+        cout << "number" << endl;
     } else if (regex_search(input, punct_reg)) {
-        cout << "b" << endl;
+        cout << "symbol" << endl;
+    } else {
+        cout << "wrong input. skill issue" << endl;
     }
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
