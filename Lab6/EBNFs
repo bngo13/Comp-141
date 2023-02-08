@@ -1,0 +1,8 @@
+1
+    a
+        expr ::= term + term
+             ::= factor * factor + factor * factor
+             ::= number * number + number * number
+             ::= 78 * 20 + 5 * 39
+    b
+    c
