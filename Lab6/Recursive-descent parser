@@ -1,0 +1,55 @@
+1.
+    class Node {
+        Node* getLeftNode()
+        Node* getRightNode()
+    }
+
+    class NodeInterior(Node) {
+        // operator set by constructor
+        char operator
+        Node* left
+        Node* right
+        char getOperator() {return operator}
+        Node* getLeftNode() {return left}
+        Node* getRightNode() {return right}
+    }
+
+    Node* parseNumber() {
+        NUMBER = [0-9]+
+        if (next_token is not NUMBER) {
+            throw exception
+        }
+
+        int child = next_token
+        consume_token
+
+        return Node(child)
+    }
+
+     Node* parseFactor() {
+        if (next_token contains '(,)' ) {
+            consume_token
+            return parseExpression()
+        } else {
+            return parseNumber()
+        }
+     }
+
+     Node* parseTerm() {
+        Node* tree = parseFactor()
+        while (next_token is '*') {
+            consume_token
+            tree = NodeInterior('*', tree, parseFactor())
+        }
+        return tree
+     }
+
+     Node* parseExpression() {
+        Node* tree = parseTerm()
+        while (next_token is '+') {
+            consume_token
+            tree = NodeInterior('+', tree, parseTerm())
+        }
+        return tree
+     }
+2.
