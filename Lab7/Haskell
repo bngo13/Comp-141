@@ -1,0 +1,60 @@
+1
+    :set prompt "haskell$"
+2
+    Command: 12 / (-5)
+    Output: -2.4
+3
+    Command: 12 `div` (-5)
+    Output: -3
+4
+    a
+        least one two three = min (min one two) (min two three)
+    b
+        least a b c = if a < b && a < c then return a else if b < a && b < c then return b else if c < a && c < b then return c else return a
+        
+5
+    a
+        3 * 4.5 - 6.2 / 5.8
+        Result: 12.431034482758621
+    b
+        (True && False) || (True || not False)
+        Result: True
+6
+    circle action radius = 
+        if action == "circumference"
+        then do
+            pi * 2 * radius
+        else if action == "area"
+        then do
+            pi * radius^2
+        else
+            do
+                0.0
+7
+    cylinder action radius height = do
+        if action == "volume" then do
+            height * (circle "area" radius)
+        else if action == "area" then do
+            (circle "circumference" radius) * height + (circle "area" radius) * 2
+        else do
+            0.0
+8
+    gCD num1 num2 = 
+        if num1 `mod` num2 == 0 then do 
+            num2 
+        else do
+            gCD num2 (num1 `mod` num2)
+9
+    isDivisible num1 num2 = do
+        if num1 `mod` num2 == 0 then do
+        True
+        else do
+            False
+10
+    highway number = do
+        if number >= 1 && number < 99 then do
+            "Primary interestate highway number"
+        else if number >= 100 && number < 999 && not (isDivisible number 100) then do
+            "Auxilary interstate highway, serving I-" ++ show (number `mod` 100)
+        else
+            "Not a valid interstate highway number"
