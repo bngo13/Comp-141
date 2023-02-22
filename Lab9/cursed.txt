@@ -1,0 +1,27 @@
+1
+    divisors input = [ x | x <- [1 .. input], input `mod` x == 0]
+2
+    commonDiv in1 in2 = [ x | x <- [1 .. (max in1 in2)], in1 `mod` x == 0, in2 `mod` x == 0]
+3
+    greatestCommonDiv in1 in2 = tail (commonDiv in1 in2)
+4
+    sumProduct input = [(sum input), (product input)]
+5
+    pyth input = [ (a,b,c)| (a, b, c) <- input, a^2 == b^2 + c^2]
+6
+    trimAlpha input = [ x | x <- input, not (x `elem` ['A' .. 'Z']) && not (x `elem` ['a' .. 'z'])]
+7
+    cartesian3 in1 in2 in3 = [x ++ y ++ z | x <- in1, y <- in2, z <- z]
+8
+    americans input = [ a | (a,b,c) <- input, b <= 20, c == "usa"]
+9
+    a
+        addVector (x1, y1, z1) (x2, y2, z2) = (x1+x2, y1+y2, z1+z2)
+    b
+        dotProduct (x1, y1, z1) (x2, y2, z2) = x1*x2 + y1*y2 + z1*z2
+    c
+        scalarMult num1 (x2, y2, z2) = (num1*x2, num1*y2, num1*z2)
+10
+    isPrime input = length (divisors input) == 2
+11
+    primeRange input = [x | x <- [0 .. input], isPrime x]
