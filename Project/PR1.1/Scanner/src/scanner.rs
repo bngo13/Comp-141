@@ -8,28 +8,40 @@ pub fn parse_token(input: String) -> Vec<String> {
 }
 
 pub fn match_num_or_identifier(input: &mut String, output: &mut String) -> bool {
-	let found_num = scan_num(input);
-	if found_num != "" {
-		*output = format!("{}\n{}: NUMBER", output, found_num);
+	// Keep looping until scanning fails. If fail, return true
+	loop {
+		let found_keyword = scan_keyword(input);
+		
+		if found_keyword != "" {
+			*output = format!("{}\n{}: KEYWORD", output, found_keyword);
+			continue;
+		}
+		
+		let found_num = scan_num(input);
+		if found_num != "" {
+			*output = format!("{}\n{}: NUMBER", output, found_num);
+			continue;
+		}
+		
+		let found_identifier = scan_identifier(input);
+		if found_identifier != "" {
+			*output = format!("{}\n{} : IDENTIFIER", output, found_identifier);
+			continue;
+		}
+		
+		let found_symbol = scan_symbol(input);
+		if found_symbol != "" {
+			*output = format!("{}\n{} : SYMBOL", output, found_symbol);
+			continue;
+		}
+		
+		if input != "" {
+			*output = format!("{}\n{} : ERROR READING INPUT", output, input);
+			return false;
+		} else {
+			return true
+		}
 	}
-	
-	let found_identifier = scan_identifier(input);
-	if found_identifier != "" {
-		*output = format!("{}\n{} : IDENTIFIER", output, found_identifier);
-	}
-	
-	let found_symbol = scan_symbol(input);
-	if found_symbol != "" {
-		*output = format!("{}\n{} : SYMBOL", output, found_symbol);
-	}
-	
-	if input != "" {
-		*output = format!("{}\n{} : ERROR", output, input);
-		return false;
-	}
-	
-	
-	return true;
 }
 
 fn parse_regex(input: &mut String, regex: Regex) -> String {
@@ -49,19 +61,26 @@ fn parse_regex(input: &mut String, regex: Regex) -> String {
 }
 
 fn scan_num(input: &mut String) -> String {
-	let re_num = Regex::new(r"^[0-9]+").unwrap();
+	let regex = Regex::new(r"^[0-9]+").unwrap();
 	
-	return parse_regex(input, re_num);
+	return parse_regex(input, regex);
 }
 
 fn scan_identifier(input: &mut String) -> String {
-	let re_identifier = Regex::new(r"^([a-z]|[A-Z])([a-z]|[A-Z]|[0-9])*$").unwrap();
+	let regex = Regex::new(r"^([a-z]|[A-Z])([a-z]|[A-Z]|[0-9])*").unwrap();
 	
-	return parse_regex(input, re_identifier);
+	return parse_regex(input, regex);
 }
 
 fn scan_symbol(input: &mut String) -> String {
-	let re_symbol = Regex::new(r"\+|\-|\*|/|\(|\)").unwrap();
+	let regex = Regex::new(format!(r"^(\{}|\{}|\{}|{}|\{}|\{}|{}|{})", 
+								   "+", "-", "*", "/", "(", ")", ":=", ";"
+								   ).as_str()).unwrap();
+	return parse_regex(input, regex);
+}
+
+fn scan_keyword(input: &mut String) -> String {
+	let regex = Regex::new(r"^(if|then|else|endif|while|do|endwhile|skip)$").unwrap();
 	
-	return parse_regex(input, re_symbol);
+	return parse_regex(input, regex);
 }
