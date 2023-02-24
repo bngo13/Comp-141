@@ -36,7 +36,7 @@ pub fn match_num_or_identifier(input: &mut String, output: &mut String) -> bool 
 		}
 		
 		if input != "" {
-			*output = format!("{}\n{} : ERROR READING INPUT", output, input);
+			*output = format!("{}\n{} : ERROR READING INPUT", output, input.clone().chars().next().unwrap());
 			return false;
 		} else {
 			return true
