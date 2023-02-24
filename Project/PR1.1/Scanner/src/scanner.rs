@@ -10,6 +10,9 @@ pub fn parse_token(input: String) -> Vec<String> {
 pub fn match_num_or_identifier(input: &mut String, output: &mut String) -> bool {
 	// Keep looping until scanning fails. If fail, return true
 	loop {
+		// Trim input each time remove training white spaces on both ends
+		*input = input.trim().to_string();
+		
 		let found_keyword = scan_keyword(input);
 		
 		if found_keyword != "" {
