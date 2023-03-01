@@ -1,0 +1,45 @@
+a:
+	p1
+		a: int global
+	p2
+		a: int global
+		b: int global
+	p3
+		a: int global
+		b: int local to f :: int global
+		f: int -> int function
+	p4
+		a: int global
+		b: int global
+		f: int -> int function
+	p5
+		a: int global
+		b: int global
+		f: int -> int function
+		main: int function
+	p6
+		a: int global
+		b: int local to main :: int global
+		f: int -> int function
+		main: int function
+	p7
+		a: int local to main :: int global
+		b: int local to main :: int global
+		f: int -> int function
+		main: int function
+	p8
+		a: int local to main :: int global
+		b: int local to block in main :: int local to main :: int global
+		f: int -> int function
+		main: int function
+	p9
+		a: int local to main :: int global
+		b: int local to main :: int global
+		f: int -> int function
+		main: int function
+b:
+	1.5
+	2.3
+	3.1
+	4.3
+	5.8
