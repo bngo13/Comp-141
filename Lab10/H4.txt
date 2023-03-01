@@ -1,0 +1,69 @@
+1.
+	a
+		Char
+	b
+		[Char]
+	c
+		[[Char]]
+	d
+		Inputs: Bool, Bool
+		Output: Bool
+	e
+		Input: Char
+		Output: Char
+2.
+	a
+		Input: anything but it must be of Foldable typeclass
+		Output: Bool
+	b
+		Input: List of anything
+		Output: List of the same thing
+	c
+		Input: Int, List of something
+		Output: List of the same thing
+3.
+	f (x, y) = if x == y then "" else ""
+4.
+	f t y = if t > y then show t else show t
+5.
+	a
+		add :: Int -> Int -> Int
+		add x 0 = x
+		add x y = succ (add x (pred y))
+	b
+		mult :: Int -> Int -> Int
+		mult x 1 = x
+		mult x y = add x ((mult x (pred y)))
+	c
+		pow :: Int -> Int -> Int
+		pow x 0 = 1
+		pow x 1 = x
+		pow x y = mult x (pow x (pred y))
+6.
+	duplicate :: [a] -> [a]
+	duplicate [] = []
+	duplicate (x:xs) = x:[] ++ x:[] ++ duplicate (xs)
+7.
+	tke :: Int -> [a] -> [a]
+	tke _ [] = error "Array size too small for provided size"
+	tke 0 x = []
+	tke size (x:xs) = if size < 0 then error "Negative Number for size" else x:[] ++ (tke (size - 1) xs)
+8.
+	elm :: (Eq a) => a -> [a] -> Bool
+	elm _ [] = False
+	elm element (x:xs) = if element == x then True else elm element xs
+9
+	intrsprse :: a -> [a] -> [a]
+	intrsprse _ [a] = [a]
+	intrsprse element (front:back) = front:element:[] ++ intrsprse element back
+10
+	flat :: [[a]] -> [a]
+	flat [a]  = a
+	flat (x:xs) = x ++ flat xs
+11
+	findInd :: (Eq a) => a -> [a] -> Int
+	findInd _ [] = error "Not in list"
+	findInd find (x:xs) = if find == x then 1 else 1 + findInd find (xs)
+12
+	toUppr :: Char -> Char
+	toUppr inChar = if inChar `elem` ['a'..'z'] then ['A'..'Z'] !! findInd inChar ['a'..'z'] else inChar
