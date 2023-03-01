@@ -1,0 +1,94 @@
+a)   
+    Line 2:
+    a: int 53, Global
+    Line 3:
+    a: int 53, Global 
+    b: int 120, Global
+    Line 4:
+    a: int 53, Global 
+    b: int 120, Global
+    c: int 36, Global
+
+    Line 5:
+        a: int 53, Global 
+        b: int 120, Global
+        c: int 36, Global
+        g: function, int -> int
+    Line 7:
+        a: int 53, Global 
+        b: int 120, Global
+        c: int 120, Local to g :: int 36, Global
+        g: function, int -> int
+        
+    Line 8:
+        a: int 53, Global 
+        b: int 173, Local to g :: int 120, Global
+        c: int 120, Local to g :: int 36, Global
+        g: function, int -> int
+
+    Line 11:
+        a: int 53, Global 
+        b: int 120, Global
+        c: int 36, Global
+        g: function, int -> int
+
+
+    Line 12:
+        a: int 53, Global 
+        b: int 120, Global
+        c: int 36, Global
+        g: function, int -> int
+        f: function, int -> int
+
+    Line 13:
+        a: int 53, Global 
+        b: int 58, local to f :: int 120, Global
+        c: int 36, Global
+        g: function, int -> int
+        f: function, int -> int
+
+    Line 16:
+        a: int 53, Global 
+        b: int 120, Global
+        c: int 36, Global
+        g: function, int -> int
+        f: function, int -> int
+
+    Line 17:
+        a: int 53, Global 
+        b: int 120, Global
+        c: int 36, Global
+        g: function, int -> int
+        f: function, int -> int
+        main: function, int
+
+    Line 19:
+        a: int 53, Global 
+        b: int 53, local to main :: int 120, Global
+        c: int 36, Global
+        g: function, int -> int
+        f: function, int -> int
+        main: function, int
+
+    Line 21:
+        a: int 53, Global 
+        b: int 53, local to main :: int 120, Global
+        c: int 178, local to main :: int 36, Global
+        g: function, int -> int
+        f: function, int -> int
+        main: function, int
+
+    Line 24:
+        a: int 53, Global 
+        b: int 120, Global
+        c: int 36, Global
+        g: function, int -> int
+        f: function, int -> int
+        main: function, int
+b)
+    1.120
+    2.53
+    3.58
+    4.120
+    5.178
+    6.178
