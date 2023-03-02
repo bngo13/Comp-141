@@ -1,0 +1,273 @@
+1.
+	a:
+		p1
+			a: int global
+		p2
+			a: int global
+			b: int global
+		p3
+			a: int global
+			b: int local to f :: int global
+			f: int -> int function
+		p4
+			a: int global
+			b: int global
+			f: int -> int function
+		p5
+			a: int global
+			b: int global
+			f: int -> int function
+			main: int function
+		p6
+			a: int global
+			b: int local to main :: int global
+			f: int -> int function
+			main: int function
+		p7
+			a: int local to main :: int global
+			b: int local to main :: int global
+			f: int -> int function
+			main: int function
+		p8
+			a: int local to main :: int global
+			b: int local to block in main :: int local to main :: int global
+			f: int -> int function
+			main: int function
+		p9
+			a: int local to main :: int global
+			b: int local to main :: int global
+			f: int -> int function
+			main: int function
+	b:
+		1.5
+		2.3
+		3.1
+		4.3
+		5.8
+2.
+	a
+		p1
+			a : int = 3 global
+			b : int = 5 global
+			f : int -> int function
+			main : int function
+		p2
+			a : int = 3 global
+			b : int 3 local to main :: int = 5 global
+			f : int -> int function
+			main : int function
+		p3
+			a : int = 9 local to main :: int = 3 global
+			b : int 3 local to main :: int = 5 global
+			f : int -> int function
+			main : int function
+		p4
+			a : int = 9 local to main :: int = 3 global
+			b : int = 1 local to block in main :: int = 3 local to main :: int = 5 global
+			f : int -> int function
+			main : int function
+		p5
+			a : int = 9 local to main :: int = 3 global
+			b : int 3 local to main :: int = 5 global
+			f : int -> int function
+			main : int function
+		p6
+			a : int = 9 local to main :: int = 3 global
+			b : int local to f :: int 3 local to main :: int = 5 global
+			f : int -> int function
+			main : int function
+		p7
+			a : int = 9 local to main :: int = 3 global
+			b : int local to f :: int 3 local to main :: int = 5 global
+			c : int local to f
+			f : int -> int function
+			main : int function
+		p8
+			a : int = 9 local to main :: int = 3 global
+			b : int 3 local to main :: int = 5 global
+			f : int -> int function
+			main : int function
+		p9
+			a : int = 3 global
+			b : int = 5 global
+			f : int -> int function
+			main : int function
+	b
+		1.5
+		2.3
+		3.1
+		4.3
+		5.12
+3.
+    a)   
+        Line 2:
+        a: int, Global
+        Line 3:
+        a: int, Global 
+        b: int, Global
+        Line 4:
+        a: int, Global 
+        b: int, Global
+        c: int, Global
+
+        Line 5:
+            a: int, Global 
+            b: int, Global
+            c: int, Global
+            g: function, int -> int
+        Line 7:
+            a: int, Global 
+            b: int, Global
+            c: int, Local to g :: int, Global
+            g: function, int -> int
+            
+        Line 8:
+            a: int, Global 
+            b: int, Local to g :: int, Global
+            c: int, Local to g :: int, Global
+            g: function, int -> int
+
+        Line 11:
+            a: int, Global 
+            b: int, Global
+            c: int, Global
+            g: function, int -> int
+
+
+        Line 12:
+            a: int, Global 
+            b: int, Global
+            c: int, Global
+            g: function, int -> int
+            f: function, int -> int
+
+        Line 13:
+            a: int, Global 
+            b: int, local to f :: int, Global
+            c: int, Global
+            g: function, int -> int
+            f: function, int -> int
+
+        Line 16:
+            a: int, Global 
+            b: int, Global
+            c: int, Global
+            g: function, int -> int
+            f: function, int -> int
+
+        Line 17:
+            a: int, Global 
+            b: int, Global
+            c: int, Global
+            g: function, int -> int
+            f: function, int -> int
+            main: function, int
+
+        Line 19:
+            a: int, Global 
+            b: int, local to main :: int 120, Global
+            c: int, Global
+            g: function, int -> int
+            f: function, int -> int
+            main: function, int
+
+        Line 21:
+            a: int, Global 
+            b: int, local to main :: int, Global
+            c: int, local to main :: int, Global
+            g: function, int -> int
+            f: function, int -> int
+            main: function, int
+
+        Line 24:
+            a: int, Global 
+            b: int, Global
+            c: int, Global
+            g: function, int -> int
+            f: function, int -> int
+            main: function, int
+    b)
+        1.120
+        2.53
+        3.58
+        4.120
+        5.178
+        6.178
+4.
+	17
+		a : int = 53 global
+		b : int = 120 global
+		c : int = 36 global
+		g : int -> int function
+		f : int -> int function
+		main : int function
+	19
+		a : int = 53 global
+		b : int = 53 local to main :: int = 120 global
+		c : int = 36 global
+		g : int -> int function
+		f : int -> int function
+		main : int function
+	12
+		a : int 53 local to f :: int = 53 global
+		b : int = 53 local to main :: int = 120 global
+		c : int = 36 global
+		g : int -> int function
+		f : int -> int function
+		main : int function
+	13
+		a : int 53 local to f :: int = 53 global
+		b : int 58 local to f :: int = 53 local to main :: int = 120 global
+		c : int = 36 global
+		g : int -> int function
+		f : int -> int function
+		main : int function
+	5
+		a : int 58 local to g :: int 53 local to f :: int = 53 global
+		b : int 58 local to f :: int = 53 local to main :: int = 120 global
+		c : int = 36 global
+		g : int -> int function
+		f : int -> int function
+		main : int function
+	7
+		a : int 58 local to g :: int 53 local to f :: int = 53 global
+		b : int 58 local to f :: int = 53 local to main :: int = 120 global
+		c : int 58 local to g :: int = 36 global
+		g : int -> int function
+		f : int -> int function
+		main : int function
+	8
+		a : int 58 local to g :: int 53 local to f :: int = 53 global
+		b : int 116 local to g :: int 58 local to f :: int = 53 local to main :: int = 120 global
+		c : int 58 local to g :: int = 36 global
+		g : int -> int function
+		f : int -> int function
+		main : int function
+	11
+		a : int 53 local to f :: int = 53 global
+		b : int 58 local to f :: int = 53 local to main :: int = 120 global
+		c : int = 36 global
+		g : int -> int function
+		f : int -> int function
+		main : int function	
+	16
+		a : int = 53 global
+		b : int = 53 local to main :: int = 120 global
+		c : int = 36 global
+		g : int -> int function
+		f : int -> int function
+		main : int function	
+	21
+		a : int = 53 global
+		b : int = 53 local to main :: int = 120 global
+		c : int = 116 global
+		g : int -> int function
+		f : int -> int function
+		main : int function	
+	24
+		a : int = 53 global
+		b : int = 120 global
+		c : int = 116 global
+		g : int -> int function
+		f : int -> int function
+		main : int function	

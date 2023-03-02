@@ -1,53 +1,54 @@
-a
-	p1
-		a : int = 3 global
-		b : int = 5 global
-		f : int -> int function
-		main : int function
-	p2
-		a : int = 3 global
-		b : int 3 local to main :: int = 5 global
-		f : int -> int function
-		main : int function
-	p3
-		a : int = 9 local to main :: int = 3 global
-		b : int 3 local to main :: int = 5 global
-		f : int -> int function
-		main : int function
-	p4
-		a : int = 9 local to main :: int = 3 global
-		b : int = 1 local to block in main :: int = 3 local to main :: int = 5 global
-		f : int -> int function
-		main : int function
-	p5
-		a : int = 9 local to main :: int = 3 global
-		b : int 3 local to main :: int = 5 global
-		f : int -> int function
-		main : int function
-	p6
-		a : int = 9 local to main :: int = 3 global
-		b : int local to f :: int 3 local to main :: int = 5 global
-		f : int -> int function
-		main : int function
-	p7
-		a : int = 9 local to main :: int = 3 global
-		b : int local to f :: int 3 local to main :: int = 5 global
-		c : int local to f
-		f : int -> int function
-		main : int function
-	p8
-		a : int = 9 local to main :: int = 3 global
-		b : int 3 local to main :: int = 5 global
-		f : int -> int function
-		main : int function
-	p9
-		a : int = 3 global
-		b : int = 5 global
-		f : int -> int function
-		main : int function
-b
-	1.5
-	2.3
-	3.1
-	4.3
-	5.12
+2.
+	a
+		p1
+			a : int = 3 global
+			b : int = 5 global
+			f : int -> int function
+			main : int function
+		p2
+			a : int = 3 global
+			b : int 3 local to main :: int = 5 global
+			f : int -> int function
+			main : int function
+		p3
+			a : int = 9 local to main :: int = 3 global
+			b : int 3 local to main :: int = 5 global
+			f : int -> int function
+			main : int function
+		p4
+			a : int = 9 local to main :: int = 3 global
+			b : int = 1 local to block in main :: int = 3 local to main :: int = 5 global
+			f : int -> int function
+			main : int function
+		p5
+			a : int = 9 local to main :: int = 3 global
+			b : int 3 local to main :: int = 5 global
+			f : int -> int function
+			main : int function
+		p6
+			a : int = 9 local to main :: int = 3 global
+			b : int local to f :: int 3 local to main :: int = 5 global
+			f : int -> int function
+			main : int function
+		p7
+			a : int = 9 local to main :: int = 3 global
+			b : int local to f :: int 3 local to main :: int = 5 global
+			c : int local to f
+			f : int -> int function
+			main : int function
+		p8
+			a : int = 9 local to main :: int = 3 global
+			b : int 3 local to main :: int = 5 global
+			f : int -> int function
+			main : int function
+		p9
+			a : int = 3 global
+			b : int = 5 global
+			f : int -> int function
+			main : int function
+	b
+		1.5
+		2.3
+		3.1
+		4.3
+		5.12

@@ -1,0 +1,78 @@
+4.
+	17
+		a : int = 53 global
+		b : int = 120 global
+		c : int = 36 global
+		g : int -> int function
+		f : int -> int function
+		main : int function
+	19
+		a : int = 53 global
+		b : int = 53 local to main :: int = 120 global
+		c : int = 36 global
+		g : int -> int function
+		f : int -> int function
+		main : int function
+	12
+		a : int 53 local to f :: int = 53 global
+		b : int = 53 local to main :: int = 120 global
+		c : int = 36 global
+		g : int -> int function
+		f : int -> int function
+		main : int function
+	13
+		a : int 53 local to f :: int = 53 global
+		b : int 58 local to f :: int = 53 local to main :: int = 120 global
+		c : int = 36 global
+		g : int -> int function
+		f : int -> int function
+		main : int function
+	5
+		a : int 58 local to g :: int 53 local to f :: int = 53 global
+		b : int 58 local to f :: int = 53 local to main :: int = 120 global
+		c : int = 36 global
+		g : int -> int function
+		f : int -> int function
+		main : int function
+	7
+		a : int 58 local to g :: int 53 local to f :: int = 53 global
+		b : int 58 local to f :: int = 53 local to main :: int = 120 global
+		c : int 58 local to g :: int = 36 global
+		g : int -> int function
+		f : int -> int function
+		main : int function
+	8
+		a : int 58 local to g :: int 53 local to f :: int = 53 global
+		b : int 116 local to g :: int 58 local to f :: int = 53 local to main :: int = 120 global
+		c : int 58 local to g :: int = 36 global
+		g : int -> int function
+		f : int -> int function
+		main : int function
+	11
+		a : int 53 local to f :: int = 53 global
+		b : int 58 local to f :: int = 53 local to main :: int = 120 global
+		c : int = 36 global
+		g : int -> int function
+		f : int -> int function
+		main : int function	
+	16
+		a : int = 53 global
+		b : int = 53 local to main :: int = 120 global
+		c : int = 36 global
+		g : int -> int function
+		f : int -> int function
+		main : int function	
+	21
+		a : int = 53 global
+		b : int = 53 local to main :: int = 120 global
+		c : int = 116 global
+		g : int -> int function
+		f : int -> int function
+		main : int function	
+	24
+		a : int = 53 global
+		b : int = 120 global
+		c : int = 116 global
+		g : int -> int function
+		f : int -> int function
+		main : int function	
