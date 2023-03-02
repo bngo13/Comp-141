@@ -42,8 +42,7 @@ fn main() {
         
         // Parser
         //parser::parseTokens(&mut input_tokens.clone());
-        println!("{:?}", parser::parseTokens(&mut input_tokens));
-        println!("{:?}", input_tokens);
+        println!("{:?}", parser::parse_tokens(&mut input_tokens));
         // Write Scanner Results to output
         output = format!("{}\n\n", scanner_results);
     }

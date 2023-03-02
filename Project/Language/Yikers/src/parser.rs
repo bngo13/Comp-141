@@ -9,35 +9,150 @@ pub enum Parser {
 	PlaceHolder
 }
 
-pub fn parseTokens(tokens: &mut Vec<String>) -> Parser {
+pub fn parse_tokens(tokens: &mut Vec<String>) -> Parser {
 	parse_expression(tokens)
 }
 
 fn parse_expression(tokens: &mut Vec<String>) -> Parser {
 	// Term {+ Term}
-	parse_term(tokens)
-}
-
-fn parse_term(tokens: &mut Vec<String>) -> Parser {
-	// Factor {- Factor}
-	parse_factor(tokens)
-}
-
-fn parse_factor(tokens: &mut Vec<String>) -> Parser {
-	// Piece {/ Piece}
-	parse_piece(tokens)
-}
-
-fn parse_piece(tokens: &mut Vec<String>) -> Parser{
-	// Element {* Element}
-	let left = parse_element(tokens);
+	let left = parse_term(tokens);
+	match left {
+		Parser::PlaceHolder => {return left}
+		_ => ()
+	}
+	
 	
 	let mut tree = left.clone();
 	
 	
 	let current_token = tokens.get(0);
 	if current_token.is_none() {
-		return Parser::PlaceHolder;
+		return left;
+	}
+	
+	let mut current_token = current_token.unwrap().clone();
+	
+	
+	
+	
+	while current_token == "+" {
+		tokens.remove(0);
+		let right = parse_term(tokens);
+		match right {
+			Parser::PlaceHolder => {return right}
+			_ => ()
+		}
+	
+		tree = Parser::Tree(Box::new(tree), "+".to_string(), Box::new(right));
+		
+		if tokens.get(0).is_none() {
+			break;
+		}
+		
+		current_token = tokens.get(0).unwrap().to_string().clone();
+		
+	}
+	tree
+}
+
+fn parse_term(tokens: &mut Vec<String>) -> Parser {
+	// Factor {- Factor}
+	let left = parse_factor(tokens);
+	match left {
+		Parser::PlaceHolder => {return left}
+		_ => ()
+	}
+	
+	
+	let mut tree = left.clone();
+	
+	
+	let current_token = tokens.get(0);
+	if current_token.is_none() {
+		return left;
+	}
+	
+	let mut current_token = current_token.unwrap().clone();
+	
+	
+	
+	
+	while current_token == "-" {
+		tokens.remove(0);
+		let right = parse_factor(tokens);
+		match right {
+			Parser::PlaceHolder => {return right}
+			_ => ()
+		}
+	
+		tree = Parser::Tree(Box::new(tree), "-".to_string(), Box::new(right));
+		
+		if tokens.get(0).is_none() {
+			break;
+		}
+		
+		current_token = tokens.get(0).unwrap().to_string().clone();
+		
+	}
+	tree
+}
+
+fn parse_factor(tokens: &mut Vec<String>) -> Parser {
+	// Piece {/ Piece}
+	let left = parse_piece(tokens);
+	match left {
+		Parser::PlaceHolder => {return left}
+		_ => ()
+	}
+	
+	
+	let mut tree = left.clone();
+	
+	
+	let current_token = tokens.get(0);
+	if current_token.is_none() {
+		return left;
+	}
+	
+	let mut current_token = current_token.unwrap().clone();
+	
+	
+	
+	
+	while current_token == "/" {
+		tokens.remove(0);
+		let right = parse_piece(tokens);
+		match right {
+			Parser::PlaceHolder => {return right}
+			_ => ()
+		}
+	
+		tree = Parser::Tree(Box::new(tree), "/".to_string(), Box::new(right));
+		
+		if tokens.get(0).is_none() {
+			break;
+		}
+		
+		current_token = tokens.get(0).unwrap().to_string().clone();
+		
+	}
+	tree
+}
+
+fn parse_piece(tokens: &mut Vec<String>) -> Parser{
+	// Element {* Element}
+	let left = parse_element(tokens);
+	match left {
+		Parser::PlaceHolder => {return left}
+		_ => ()
+	}
+	
+	let mut tree = left.clone();
+	
+	
+	let current_token = tokens.get(0);
+	if current_token.is_none() {
+		return left;
 	}
 	
 	let mut current_token = current_token.unwrap().clone();
@@ -48,6 +163,10 @@ fn parse_piece(tokens: &mut Vec<String>) -> Parser{
 	while current_token == "*" {
 		tokens.remove(0);
 		let right = parse_element(tokens);
+		match right {
+			Parser::PlaceHolder => {return right}
+			_ => ()
+		}
 	
 		tree = Parser::Tree(Box::new(tree), "*".to_string(), Box::new(right));
 		
@@ -74,7 +193,9 @@ fn parse_element(tokens: &mut Vec<String>) -> Parser {
 	if current_token.contains("(") || current_token.contains(")") {
 		// Consume token
 		tokens.remove(0);
-		return parse_expression(tokens);
+		let expr = parse_expression(tokens);
+		tokens.remove(0);
+		return expr
 	}
 	
 	let mut scan_num = current_token.clone();
