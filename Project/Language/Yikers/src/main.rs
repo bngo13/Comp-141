@@ -2,6 +2,7 @@ mod scanner;
 mod parser;
 use std::io::BufRead;
 
+use parser::Parser;
 
 fn main() {
     let mut args = std::env::args();
@@ -15,19 +16,24 @@ fn main() {
     
     let mut output = String::new();
     
-    
+
     
     for line in infile_lines {
         let line = line.unwrap();
+        if line.replace(" ", "").is_empty() {
+            continue;
+        }
         
         // Scanner
         let mut scanner_results = String::new();
         scanner_results.push_str(&format!("Line: {}", line));
+        let mut valid = true;
         let mut tmp_tokens = Vec::new();
         let mut input_tokens = scanner::parse_token(line);
         for mut token in input_tokens.clone() {
             let scan = scanner::match_num_or_identifier(&mut token, &mut scanner_results);
             if !scan.0 {
+                valid = false;
                 break;
             }
             
@@ -37,14 +43,22 @@ fn main() {
             
         }
         
+        if !valid {
+            output = format!("{}{}\n", output, scanner_results);
+            break;
+        }
+        
         // Regenerate Tokens Properly
         input_tokens = tmp_tokens;
         
         // Parser
-        //parser::parseTokens(&mut input_tokens.clone());
-        println!("{:?}", parser::parse_tokens(&mut input_tokens));
+        let mut parser_results = String::new();
+        let tree = parser::parse_tokens(&mut input_tokens);
+        parser::printTree(&tree, &mut parser_results, &mut 0);
+        
+        
         // Write Scanner Results to output
-        output = format!("{}\n\n", scanner_results);
+        output = format!("{}{}\n\n{}\n\n", output, scanner_results, parser_results);
     }
     
     write_output(output, args.nth(0).expect("No output file detected"));

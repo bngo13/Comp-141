@@ -3,14 +3,66 @@ use super::scanner;
 use std::boxed::Box;
 
 #[derive(Debug, Clone)]
+pub struct Data {
+	variable: String,
+	datatype: String
+}
+
+#[derive(Debug, Clone)]
 pub enum Parser {
-	Tree(Box<Parser>, String, Box<Parser>),
-	Value(String),
+	Tree(Box<Parser>, Data, Box<Parser>),
+	Value(Data),
 	PlaceHolder
 }
 
 pub fn parse_tokens(tokens: &mut Vec<String>) -> Parser {
 	parse_expression(tokens)
+}
+
+pub fn printTree(tree: &Parser, output: &mut String, tab: &mut i32) {
+	match tree {
+		Parser::Tree(left, symbol, right) => {
+			// Print with tabs in mind
+			for _ in 0..*tab {
+				*output = format!("{}	", output);
+			}
+			*output = format!("{}{} : {}\n", output, symbol.variable, symbol.datatype);
+			
+			// Increment tab count
+			*tab = *tab + 1;
+			
+			// Handle Left
+			match left.as_ref() {
+				Parser::Value(val) => {
+					for _ in 0..*tab {
+						*output = format!("{}	", output);
+					}
+					*output = format!("{}{} : {}\n", output, val.variable, val.datatype);
+				}
+				Parser::Tree(_, _, _) => {
+					printTree(left, output, tab);
+					*tab = *tab - 1;
+				}
+				_ => ()
+			}
+			
+			// Handle Right
+			match right.as_ref() {
+				Parser::Value(val) => {
+					for _ in 0..*tab {
+						*output = format!("{}	", output);
+					}
+					*output = format!("{}{} : {}\n", output, val.variable, val.datatype);
+				}
+				Parser::Tree(_, _, _) => {
+					printTree(right, output, tab);
+					*tab = *tab - 1;
+				}
+				_ => ()
+			}
+		}
+		_ => ()
+	}
 }
 
 fn parse_expression(tokens: &mut Vec<String>) -> Parser {
@@ -42,8 +94,13 @@ fn parse_expression(tokens: &mut Vec<String>) -> Parser {
 			Parser::PlaceHolder => {return right}
 			_ => ()
 		}
-	
-		tree = Parser::Tree(Box::new(tree), "+".to_string(), Box::new(right));
+		
+		let data = Data {
+			variable: "+".to_string(),
+			datatype: "SYMBOL".to_string(),
+		};
+		
+		tree = Parser::Tree(Box::new(tree), data, Box::new(right));
 		
 		if tokens.get(0).is_none() {
 			break;
@@ -62,10 +119,7 @@ fn parse_term(tokens: &mut Vec<String>) -> Parser {
 		Parser::PlaceHolder => {return left}
 		_ => ()
 	}
-	
-	
 	let mut tree = left.clone();
-	
 	
 	let current_token = tokens.get(0);
 	if current_token.is_none() {
@@ -74,9 +128,6 @@ fn parse_term(tokens: &mut Vec<String>) -> Parser {
 	
 	let mut current_token = current_token.unwrap().clone();
 	
-	
-	
-	
 	while current_token == "-" {
 		tokens.remove(0);
 		let right = parse_factor(tokens);
@@ -84,8 +135,13 @@ fn parse_term(tokens: &mut Vec<String>) -> Parser {
 			Parser::PlaceHolder => {return right}
 			_ => ()
 		}
-	
-		tree = Parser::Tree(Box::new(tree), "-".to_string(), Box::new(right));
+		
+		let data = Data {
+			variable: "-".to_string(),
+			datatype: "SYMBOL".to_string(),
+		};
+		
+		tree = Parser::Tree(Box::new(tree), data, Box::new(right));
 		
 		if tokens.get(0).is_none() {
 			break;
@@ -126,8 +182,13 @@ fn parse_factor(tokens: &mut Vec<String>) -> Parser {
 			Parser::PlaceHolder => {return right}
 			_ => ()
 		}
+		
+		let data = Data {
+			variable: "/".to_string(),
+			datatype: "SYMBOL".to_string(),
+		};
 	
-		tree = Parser::Tree(Box::new(tree), "/".to_string(), Box::new(right));
+		tree = Parser::Tree(Box::new(tree), data, Box::new(right));
 		
 		if tokens.get(0).is_none() {
 			break;
@@ -168,7 +229,12 @@ fn parse_piece(tokens: &mut Vec<String>) -> Parser{
 			_ => ()
 		}
 	
-		tree = Parser::Tree(Box::new(tree), "*".to_string(), Box::new(right));
+		let data = Data {
+			variable: "*".to_string(),
+			datatype: "SYMBOL".to_string(),
+		};
+	
+		tree = Parser::Tree(Box::new(tree), data, Box::new(right));
 		
 		if tokens.get(0).is_none() {
 			break;
@@ -194,7 +260,9 @@ fn parse_element(tokens: &mut Vec<String>) -> Parser {
 		// Consume token
 		tokens.remove(0);
 		let expr = parse_expression(tokens);
-		tokens.remove(0);
+		if tokens.get(0).is_some() && tokens.get(0).unwrap() == ")" {
+			tokens.remove(0);
+		}
 		return expr
 	}
 	
@@ -204,12 +272,31 @@ fn parse_element(tokens: &mut Vec<String>) -> Parser {
 	let mut scan_ident = current_token.clone();
 	scanner::scan_identifier(&mut scan_ident);
 	
-	if scan_ident == "" || scan_num == "" {
+	if scan_ident == "" {
 		// Consume token
 		tokens.remove(0);
-		return Parser::Value(current_token.to_string())
+		
+		let data = Data {
+			variable: current_token.to_string(),
+			datatype: "IDENTIFIER".to_string()
+		};
+		
+		return Parser::Value(data)
 		
 	}
+	
+	if scan_num == "" {
+		tokens.remove(0);
+		
+		let data = Data {
+			variable: current_token.to_string(),
+			datatype: "NUMBER".to_string()
+		};
+		
+		return Parser::Value(data)
+	}
+	
+	
 	
 	return Parser::PlaceHolder;
 }
