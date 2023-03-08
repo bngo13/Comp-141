@@ -1,0 +1,7 @@
+5.
+	a.
+		1: static area
+		2: stack
+		3: heap
+	b.
+		Yes. The reason is because z is set to a integer, 0, leaving a dangling reference to the number that was originally pointed to through z.

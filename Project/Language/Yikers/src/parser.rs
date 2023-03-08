@@ -67,11 +67,9 @@ pub fn printTree(tree: &Parser, output: &mut String, tab: &mut i32) {
 
 fn parse_expression(tokens: &mut Vec<String>) -> Parser {
 	// Term {+ Term}
+	// Structure is Tree(left, symbol, right)
 	let left = parse_term(tokens);
-	match left {
-		Parser::PlaceHolder => {return left}
-		_ => ()
-	}
+	if let Parser::PlaceHolder = left {return left}
 	
 	
 	let mut tree = left.clone();
@@ -90,6 +88,7 @@ fn parse_expression(tokens: &mut Vec<String>) -> Parser {
 	while current_token == "+" {
 		tokens.remove(0);
 		let right = parse_term(tokens);
+<<<<<<< HEAD
 		match right {
 			Parser::PlaceHolder => {return right}
 			_ => ()
@@ -101,6 +100,11 @@ fn parse_expression(tokens: &mut Vec<String>) -> Parser {
 		};
 		
 		tree = Parser::Tree(Box::new(tree), data, Box::new(right));
+=======
+		if let Parser::PlaceHolder = right {return right}
+	
+		tree = Parser::Tree(Box::new(tree), "+".to_string(), Box::new(right));
+>>>>>>> a65fa40 (Finished Lab12)
 		
 		if tokens.get(0).is_none() {
 			break;
@@ -115,10 +119,16 @@ fn parse_expression(tokens: &mut Vec<String>) -> Parser {
 fn parse_term(tokens: &mut Vec<String>) -> Parser {
 	// Factor {- Factor}
 	let left = parse_factor(tokens);
+<<<<<<< HEAD
 	match left {
 		Parser::PlaceHolder => {return left}
 		_ => ()
 	}
+=======
+	if let Parser::PlaceHolder = left {return left}
+	
+	
+>>>>>>> a65fa40 (Finished Lab12)
 	let mut tree = left.clone();
 	
 	let current_token = tokens.get(0);
@@ -131,6 +141,7 @@ fn parse_term(tokens: &mut Vec<String>) -> Parser {
 	while current_token == "-" {
 		tokens.remove(0);
 		let right = parse_factor(tokens);
+<<<<<<< HEAD
 		match right {
 			Parser::PlaceHolder => {return right}
 			_ => ()
@@ -142,6 +153,11 @@ fn parse_term(tokens: &mut Vec<String>) -> Parser {
 		};
 		
 		tree = Parser::Tree(Box::new(tree), data, Box::new(right));
+=======
+		if let Parser::PlaceHolder = right {return right}
+	
+		tree = Parser::Tree(Box::new(tree), "-".to_string(), Box::new(right));
+>>>>>>> a65fa40 (Finished Lab12)
 		
 		if tokens.get(0).is_none() {
 			break;
@@ -156,10 +172,7 @@ fn parse_term(tokens: &mut Vec<String>) -> Parser {
 fn parse_factor(tokens: &mut Vec<String>) -> Parser {
 	// Piece {/ Piece}
 	let left = parse_piece(tokens);
-	match left {
-		Parser::PlaceHolder => {return left}
-		_ => ()
-	}
+	if let Parser::PlaceHolder = left {return left}
 	
 	
 	let mut tree = left.clone();
@@ -178,6 +191,7 @@ fn parse_factor(tokens: &mut Vec<String>) -> Parser {
 	while current_token == "/" {
 		tokens.remove(0);
 		let right = parse_piece(tokens);
+<<<<<<< HEAD
 		match right {
 			Parser::PlaceHolder => {return right}
 			_ => ()
@@ -187,6 +201,9 @@ fn parse_factor(tokens: &mut Vec<String>) -> Parser {
 			variable: "/".to_string(),
 			datatype: "SYMBOL".to_string(),
 		};
+=======
+		if let Parser::PlaceHolder = right {return right}
+>>>>>>> a65fa40 (Finished Lab12)
 	
 		tree = Parser::Tree(Box::new(tree), data, Box::new(right));
 		
@@ -203,10 +220,7 @@ fn parse_factor(tokens: &mut Vec<String>) -> Parser {
 fn parse_piece(tokens: &mut Vec<String>) -> Parser{
 	// Element {* Element}
 	let left = parse_element(tokens);
-	match left {
-		Parser::PlaceHolder => {return left}
-		_ => ()
-	}
+	if let Parser::PlaceHolder = left {return left}
 	
 	let mut tree = left.clone();
 	
@@ -224,10 +238,7 @@ fn parse_piece(tokens: &mut Vec<String>) -> Parser{
 	while current_token == "*" {
 		tokens.remove(0);
 		let right = parse_element(tokens);
-		match right {
-			Parser::PlaceHolder => {return right}
-			_ => ()
-		}
+		if let Parser::PlaceHolder = right {return right}
 	
 		let data = Data {
 			variable: "*".to_string(),

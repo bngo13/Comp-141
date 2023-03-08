@@ -1,0 +1,15 @@
+3.
+Stack Structure:
+(tail) | (head)
+	4
+		a | b
+	12
+		a | b | b | c | d | a | b
+	14
+		a | b | b | c | d 
+	21
+		a | b | b | c | d | c | a | b | c
+	23
+		a | b | b | c | d | c | a 
+	26
+		a | b 

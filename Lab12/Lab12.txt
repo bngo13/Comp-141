@@ -1,0 +1,69 @@
+1.
+	a
+		
+	Stack Structure:
+	(tail) | (head)
+		7:
+			b | a
+		10:
+			b | a | b
+		13:
+			b | a | b | a | b
+		17:
+			b | a | b
+		18:
+			b | a
+		22:
+	b
+		1. b=5
+		2. b=3
+		3. a=1
+		4. b=1
+		5. b=1
+		5. a=6
+		6. b=3
+2.
+	a
+		3
+			value semantics
+		4
+			value semantics
+		12
+			reference semantics
+		13
+			value semantics
+		14
+			reference semantics
+		15
+			value semantics
+	b
+		5
+		3
+		5
+3.
+Stack Structure:
+(tail) | (head)
+	4
+		a | b
+	12
+		a | b | b | c | d | a | b
+	14
+		a | b | b | c | d 
+	21
+		a | b | b | c | d | c | a | b | c
+	23
+		a | b | b | c | d | c | a 
+	26
+		a | b 
+4.
+	a
+		5
+	b
+		6
+5.
+	a.
+		1: static area
+		2: stack
+		3: heap
+	b.
+		Yes. The reason is because z is set to a integer, 0, leaving a dangling reference to the number that was originally pointed to through z.

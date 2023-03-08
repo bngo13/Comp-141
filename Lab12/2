@@ -1,0 +1,18 @@
+2.
+	a
+		3
+			value semantics
+		4
+			value semantics
+		12
+			reference semantics
+		13
+			value semantics
+		14
+			reference semantics
+		15
+			value semantics
+	b
+		5
+		3
+		5
