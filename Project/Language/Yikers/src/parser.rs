@@ -16,10 +16,15 @@ pub enum Parser {
 }
 
 pub fn parse_tokens(tokens: &mut Vec<String>) -> Parser {
-	parse_expression(tokens)
+	let mut parse_tree = parse_expression(tokens);
+	
+	// If tree was made but there are still tokens left to process, input is not valid
+	if !tokens.is_empty() { parse_tree = Parser::PlaceHolder;}
+	
+	return parse_tree;
 }
 
-pub fn printTree(tree: &Parser, output: &mut String, tab: &mut i32) {
+pub fn print_tree(tree: &Parser, output: &mut String, tab: &mut i32) {
 	match tree {
 		Parser::Tree(left, symbol, right) => {
 			// Print with tabs in mind
@@ -40,10 +45,12 @@ pub fn printTree(tree: &Parser, output: &mut String, tab: &mut i32) {
 					*output = format!("{}{} : {}\n", output, val.variable, val.datatype);
 				}
 				Parser::Tree(_, _, _) => {
-					printTree(left, output, tab);
+					print_tree(left, output, tab);
 					*tab = *tab - 1;
 				}
-				_ => ()
+				Parser::PlaceHolder => {
+					*output = format!("Invalid Parse Tree!")
+				}
 			}
 			
 			// Handle Right
@@ -55,13 +62,17 @@ pub fn printTree(tree: &Parser, output: &mut String, tab: &mut i32) {
 					*output = format!("{}{} : {}\n", output, val.variable, val.datatype);
 				}
 				Parser::Tree(_, _, _) => {
-					printTree(right, output, tab);
+					print_tree(right, output, tab);
 					*tab = *tab - 1;
 				}
-				_ => ()
+				Parser::PlaceHolder => {
+					*output = format!("Invalid Parse Tree!")
+				}
 			}
 		}
-		_ => ()
+		Parser::PlaceHolder | Parser::Value(_) => {
+			*output = format!("Invalid Parse Tree!")
+		}
 	}
 }
 

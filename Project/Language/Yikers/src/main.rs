@@ -42,9 +42,8 @@ fn main() {
             }
             
         }
-        
+        output = format!("{}{}\n\n", output, scanner_results);
         if !valid {
-            output = format!("{}{}\n", output, scanner_results);
             break;
         }
         
@@ -54,12 +53,16 @@ fn main() {
         // Parser
         let mut parser_results = String::new();
         let tree = parser::parse_tokens(&mut input_tokens);
-        parser::printTree(&tree, &mut parser_results, &mut 0);
+        parser::print_tree(&tree, &mut parser_results, &mut 0);
         
+        if let Parser::PlaceHolder = tree {
+            valid = false;
+        }
         
-        // Write Scanner Results to output
-        output = format!("{}Scanner:\n\n{}\n\n", output, scanner_results);
         output = format!("{}Parser:\n\n{}\n\n", output, parser_results);
+        if !valid {
+            break;
+        }
     }
     
     write_output(output, args.nth(0).expect("No output file detected"));
