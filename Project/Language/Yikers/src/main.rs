@@ -58,7 +58,8 @@ fn main() {
         
         
         // Write Scanner Results to output
-        output = format!("{}{}\n\n{}\n\n", output, scanner_results, parser_results);
+        output = format!("{}Scanner:\n\n{}\n\n", output, scanner_results);
+        output = format!("{}Parser:\n\n{}\n\n", output, parser_results);
     }
     
     write_output(output, args.nth(0).expect("No output file detected"));
