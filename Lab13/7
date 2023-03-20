@@ -1,0 +1,9 @@
+7.
+	a.
+		implicitly typed. there are no uses of explicit declarations
+	b.
+		statically typed. x and y are not changed at run time to booleans
+	c.
+		strong. there was no casting during the addition, leading to error
+	d.
+		type inference. haskell inferred the types of both x and y and spat out an error

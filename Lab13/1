@@ -1,0 +1,9 @@
+1.
+	a.
+		explicity. in the previous line, the variable i was defined as an int.
+	b.
+		statically typed. the variable i does not allow to be changed, meaning that the stack for the variable is not changeable at runtime.
+	c.
+		strongly typed. there is no casting or loopholes to convert the int to a boolean
+	d.
+		type inference. the error is on the if statement, stating that the input cannot be a boolean. 

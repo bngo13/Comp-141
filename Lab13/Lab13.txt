@@ -1,0 +1,31 @@
+1.
+	a.
+		explicity. in the previous line, the variable i was defined as an int.
+	b.
+		statically typed. the variable i does not allow to be changed, meaning that the stack for the variable is not changeable at runtime.
+	c.
+		strongly typed. there is no casting or loopholes to convert the int to a boolean
+	d.
+		type inference. the error is on the if statement, stating that the input cannot be a boolean. 
+2.
+	-3
+3.
+	data Direction = Up | Down | Left | Right4.
+	a
+	0
+5.
+	tuple = (True, "True", 'T')
+6.
+	a
+	97
+	
+	when changing a value in a union, everything gets changed too
+7.
+	a.
+		implicitly typed. there are no uses of explicit declarations
+	b.
+		statically typed. x and y are not changed at run time to booleans
+	c.
+		strong. there was no casting during the addition, leading to error
+	d.
+		type inference. haskell inferred the types of both x and y and spat out an error

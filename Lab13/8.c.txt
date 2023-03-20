@@ -1,0 +1,22 @@
+#include <stdio.h>
+#include <string.h>
+
+union something {
+	int i;
+	char s[5];
+	float f;
+};
+int main () {
+	union something y;
+	
+	strcpy(y.s, "aaaa");
+	y.f = 834.63;
+	y.i = 47;
+	
+	printf("Int: %d\n", y.i);
+	
+	printf("String: %s\n", y.s);
+	
+	printf("Float: %f\n", y.f);
+	return 0;
+}
