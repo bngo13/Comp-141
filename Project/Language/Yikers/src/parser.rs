@@ -16,7 +16,7 @@ pub enum Parser {
 }
 
 pub fn parse_tokens(tokens: &mut Vec<String>) -> Parser {
-	parse_expression(tokens)
+	parse_statement(tokens)
 }
 
 pub fn printTree(tree: &Parser, output: &mut String, tab: &mut i32) {
@@ -63,6 +63,154 @@ pub fn printTree(tree: &Parser, output: &mut String, tab: &mut i32) {
 		}
 		_ => ()
 	}
+}
+
+fn parse_statement(tokens: &mut Vec<String>) -> Parser {
+	let left = parse_basestatement(tokens);
+	match left {
+		Parser::PlaceHolder => {return left}
+		_ => ()
+	}
+	
+	let mut tree = left.clone();
+	
+	
+	let current_token = tokens.get(0);
+	if current_token.is_none() {
+		return left;
+	}
+	
+	let mut current_token = current_token.unwrap().clone();
+	while current_token == String::from(";") {
+		tokens.remove(0);
+		let right = parse_basestatement(tokens);
+		match right {
+			Parser::PlaceHolder => {
+				return tree
+				
+			}
+			_ => ()
+		}
+		let data = Data {
+			variable: ";".to_string(),
+			datatype: "SYMBOL".to_string(),
+		};
+		
+		tree = Parser::Tree(Box::new(tree), data, Box::new(right));
+		
+		if tokens.get(0).is_none() {
+			break;
+		}
+		
+		current_token = tokens.get(0).unwrap().to_string().clone();
+	}
+	
+	tree
+}
+
+fn parse_basestatement(tokens: &mut Vec<String>) -> Parser  {
+	// parse_assignment
+	let assignment_result = parse_assignment(tokens);
+	
+	match assignment_result {
+		Parser::PlaceHolder => (),
+		_ => {
+			return assignment_result;
+		}
+	}
+	// parse_ifstatement
+	let if_result = parse_ifstatement(tokens);
+	
+	match if_result {
+		Parser::PlaceHolder => (),
+		_ => {
+			return if_result;
+		}
+	}
+	// parse_whilestatement
+	let while_result = parse_whilestatement(tokens);
+	
+	match while_result {
+		Parser::PlaceHolder => (),
+		_ => {
+			return while_result;
+		}
+	}
+	// skip
+	let current_token = tokens.get(0);
+	
+	if current_token.is_none() {
+		return Parser::PlaceHolder
+	}
+	
+	if current_token.unwrap() == "skip" {
+		let data = Data {
+			variable: String::from("skip"),
+			datatype: String::from("keyword")
+		};
+		
+		return Parser::Value(data);
+	}
+	
+	
+	// else return placeholder
+	
+	return Parser::PlaceHolder
+}
+
+fn parse_assignment(tokens: &mut Vec<String>) -> Parser  {
+	let identifier_token = tokens.get(0);
+	
+	if identifier_token.is_none() {
+		return Parser::PlaceHolder
+	}
+	
+	let identifier_token = identifier_token.unwrap();
+	
+	// Check for identifier on the front
+	let mut scan_ident = identifier_token.clone();
+	scanner::scan_identifier(&mut scan_ident);
+	
+	// Make sure first token is an identifier
+	if scan_ident != "" {
+		return Parser::PlaceHolder;
+	}
+	
+	let identifier = Parser::Value (Data {
+		variable: identifier_token.to_string(),
+		datatype: "IDENTIFIER".to_string()
+	});
+	
+	// Remove idenfiier from token list
+	tokens.remove(0);
+	
+	let symbol = tokens.get(0).unwrap();
+	
+	// Check for the middle symbol to be :=
+	if symbol != ":=" {
+		return Parser::PlaceHolder;
+	}
+	
+	// Convert symbol to the Data enum
+	let symbol = Data {
+		variable: ":=".to_string(),
+		datatype: "SYMBOL".to_string()
+	};
+	
+	// Remove Symbol from token list
+	tokens.remove(0);
+	
+	let right = parse_expression(tokens);
+	
+	return Parser::Tree(Box::new(identifier), symbol, Box::new(right));
+}
+
+fn parse_ifstatement(tokens: &mut Vec<String>) -> Parser  {
+	return Parser::PlaceHolder
+}
+
+fn parse_whilestatement(tokens: &mut Vec<String>) -> Parser  {
+	return Parser::PlaceHolder
 }
 
 fn parse_expression(tokens: &mut Vec<String>) -> Parser {
