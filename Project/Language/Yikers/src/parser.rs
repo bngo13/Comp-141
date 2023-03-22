@@ -84,6 +84,7 @@ fn parse_statement(tokens: &mut Vec<String>) -> Parser {
 	while current_token == String::from(";") {
 		tokens.remove(0);
 		let right = parse_basestatement(tokens);
+		
 		match right {
 			Parser::PlaceHolder => {
 				return tree
@@ -104,13 +105,16 @@ fn parse_statement(tokens: &mut Vec<String>) -> Parser {
 		
 		current_token = tokens.get(0).unwrap().to_string().clone();
 	}
-	
 	tree
 }
 
 fn parse_basestatement(tokens: &mut Vec<String>) -> Parser  {
+	
+	// Each check will return PlaceHolder if it doesn't apply
+	
 	// parse_assignment
 	let assignment_result = parse_assignment(tokens);
+	
 	
 	match assignment_result {
 		Parser::PlaceHolder => (),
@@ -118,6 +122,7 @@ fn parse_basestatement(tokens: &mut Vec<String>) -> Parser  {
 			return assignment_result;
 		}
 	}
+	
 	// parse_ifstatement
 	let if_result = parse_ifstatement(tokens);
 	
@@ -127,6 +132,7 @@ fn parse_basestatement(tokens: &mut Vec<String>) -> Parser  {
 			return if_result;
 		}
 	}
+	
 	// parse_whilestatement
 	let while_result = parse_whilestatement(tokens);
 	
@@ -136,73 +142,98 @@ fn parse_basestatement(tokens: &mut Vec<String>) -> Parser  {
 			return while_result;
 		}
 	}
+	
 	// skip
 	let current_token = tokens.get(0);
 	
 	if current_token.is_none() {
+		// edge case for empty string
 		return Parser::PlaceHolder
 	}
 	
 	if current_token.unwrap() == "skip" {
 		let data = Data {
-			variable: String::from("skip"),
-			datatype: String::from("keyword")
+			variable: String::from("SKIP"),
+			datatype: String::from("KEYWORD")
 		};
 		
 		return Parser::Value(data);
 	}
 	
-	
-	// else return placeholder
-	
+	// if none are true return PlaceHolder
 	return Parser::PlaceHolder
 }
 
 fn parse_assignment(tokens: &mut Vec<String>) -> Parser  {
-	let identifier_token = tokens.get(0);
+	// IDENTIFIER := expression
 	
-	if identifier_token.is_none() {
-		return Parser::PlaceHolder
-	}
+	/****** Identifier ******/
 	
-	let identifier_token = identifier_token.unwrap();
-	
-	// Check for identifier on the front
-	let mut scan_ident = identifier_token.clone();
-	scanner::scan_identifier(&mut scan_ident);
-	
-	// Make sure first token is an identifier
-	if scan_ident != "" {
-		return Parser::PlaceHolder;
-	}
-	
-	let identifier = Parser::Value (Data {
-		variable: identifier_token.to_string(),
-		datatype: "IDENTIFIER".to_string()
-	});
-	
-	// Remove idenfiier from token list
-	tokens.remove(0);
-	
-	let symbol = tokens.get(0).unwrap();
-	
-	// Check for the middle symbol to be :=
-	if symbol != ":=" {
-		return Parser::PlaceHolder;
-	}
-	
-	// Convert symbol to the Data enum
-	let symbol = Data {
-		variable: ":=".to_string(),
-		datatype: "SYMBOL".to_string()
+	let identifier = {
+		let identifier_token = tokens.get(0);
+		
+		if identifier_token.is_none() {
+			return Parser::PlaceHolder
+		}
+		
+		// replace identifier_token with unwrapped version since above confirmed not empty
+		let identifier_token = identifier_token.unwrap();
+		
+		// Check for identifier on the front
+		
+		let mut scan_keyword = identifier_token.clone();
+		scanner::scan_keyword(&mut scan_keyword);
+		
+		if scan_keyword == "" {
+			return Parser::PlaceHolder;
+		}
+		
+		let mut scan_ident = identifier_token.clone();
+		scanner::scan_identifier(&mut scan_ident);
+		
+		// Make sure first token is an identifier
+		if scan_ident != "" {
+			return Parser::PlaceHolder;
+		}
+		
+		let identifier = Parser::Value (Data {
+			variable: identifier_token.to_string(),
+										datatype: "IDENTIFIER".to_string()
+		});
+		
+		// Remove idenfiier from token list
+		tokens.remove(0);
+		identifier
 	};
 	
-	// Remove Symbol from token list
-	tokens.remove(0);
+	/****** Symbol ******/
 	
-	let right = parse_expression(tokens);
+	let symbol = {
+		let symbol = tokens.get(0).unwrap();
 	
-	return Parser::Tree(Box::new(identifier), symbol, Box::new(right));
+	// Check for the middle symbol to be :=
+		if symbol != ":=" {
+			return Parser::PlaceHolder;
+		}
+		
+		// Convert symbol to the Data enum
+		let symbol = Data {
+			variable: ":=".to_string(),
+			datatype: "SYMBOL".to_string()
+		};
+		
+		// Remove Symbol from token list
+		tokens.remove(0);
+		
+		symbol
+	};
+	
+	/****** Expression ******/
+	
+	let expression = parse_expression(tokens);
+	
+	
+	return Parser::Tree(Box::new(identifier), symbol, Box::new(expression));
 }
 
 fn parse_ifstatement(tokens: &mut Vec<String>) -> Parser  {
