@@ -1,0 +1,17 @@
+4.
+	a
+		no casting
+		5
+		5
+	b
+		upcasting
+		6
+	c
+		upcasting
+		compile error. getY() is not defined for class type A
+	d
+		downcasting
+		ClassCastException
+	e
+		upcast then downcast
+		6

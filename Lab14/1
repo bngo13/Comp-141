@@ -1,0 +1,2 @@
+1.
+	typedef int (*int_binop) (int, int)

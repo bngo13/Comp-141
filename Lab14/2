@@ -1,0 +1,12 @@
+2.
+	int fold_binop(int_binop op, int arr[], int size) {
+		int total = 0;
+		
+		for (int i = 0; i < size; i++) {
+			int one = arr[i];
+			
+			total = op(one, total);
+		}
+		
+		return total;
+	}

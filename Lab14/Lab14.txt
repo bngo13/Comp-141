@@ -1,0 +1,67 @@
+1.
+	typedef int (*int_binop) (int, int)
+2.
+	int fold_binop(int_binop op, int arr[], int size) {
+		int total = 0;
+		
+		for (int i = 0; i < size; i++) {
+			int one = arr[i];
+			
+			total = op(one, total);
+		}
+		
+		return total;
+	}
+3.
+	super: class A
+	subtype: class B
+4.
+	a
+		no casting
+		5
+		5
+	b
+		upcasting
+		6
+	c
+		upcasting
+		compile error. getY() is not defined for class type A
+	d
+		downcasting
+		ClassCastException
+	e
+		upcast then downcast
+		6
+5.
+	typedef int (*IntToInt) (int);
+
+	void map_array (IntToInt f, int a[], int size) {
+		for (int i = 0; i < size; i++) {
+			a[i] = f(a[i]);
+		}
+	}
+6.
+	a.
+		show
+	b.
+		i
+			"3.141592653589793"
+		ii
+			"[1,2,3,4]"
+		iii
+			"(\"hello\",'y')"
+		iv
+			<interactive>:6:1: error:
+				• No instance for (Show ([a0] -> a0)) arising from a use of ‘show’
+					(maybe you haven't applied a function to enough arguments?)
+				• In the expression: show head
+				In an equation for ‘it’: it = show head
+	c.
+		read
+	d.
+		read "72.3" :: Float
+			72.3
+		read "(True,'u')" :: (Bool, Char)
+			(True, 'u')
+		read "[1,2,3,4]" :: [Int]
+			[1,2,3,4]

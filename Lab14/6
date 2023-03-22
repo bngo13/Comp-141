@@ -1,0 +1,25 @@
+6.
+	a.
+		show
+	b.
+		i
+			"3.141592653589793"
+		ii
+			"[1,2,3,4]"
+		iii
+			"(\"hello\",'y')"
+		iv
+			<interactive>:6:1: error:
+				• No instance for (Show ([a0] -> a0)) arising from a use of ‘show’
+					(maybe you haven't applied a function to enough arguments?)
+				• In the expression: show head
+				In an equation for ‘it’: it = show head
+	c.
+		read
+	d.
+		read "72.3" :: Float
+			72.3
+		read "(True,'u')" :: (Bool, Char)
+			(True, 'u')
+		read "[1,2,3,4]" :: [Int]
+			[1,2,3,4]

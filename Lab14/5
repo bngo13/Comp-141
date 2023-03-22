@@ -1,0 +1,8 @@
+5.
+	typedef int (*IntToInt) (int);
+
+	void map_array (IntToInt f, int a[], int size) {
+		for (int i = 0; i < size; i++) {
+			a[i] = f(a[i]);
+		}
+	}
