@@ -11,6 +11,7 @@ pub struct Data {
 #[derive(Debug, Clone)]
 pub enum Parser {
 	Tree(Box<Parser>, Data, Box<Parser>),
+	IfValue(Box<Parser>, Box<Parser>, Box<Parser>),
 	Value(Data),
 	PlaceHolder
 }
@@ -43,6 +44,23 @@ pub fn printTree(tree: &Parser, output: &mut String, tab: &mut i32) {
 					printTree(left, output, tab);
 					*tab = *tab - 1;
 				}
+				Parser::IfValue(expr, s1, s2) => {
+					for _ in 0..*tab {
+						*output = format!("{}	", output);
+					}
+					
+					*output = format!("{}IF\n", output);
+					
+					*tab = *tab + 1;
+					
+					println!("{:?}", expr);
+					printTree(&expr, output, tab);
+					*tab = *tab - 1;
+					printTree(&s1, output, tab);
+					*tab = *tab - 1;
+					printTree(&s2, output, tab);
+					
+				}
 				_ => ()
 			}
 			
@@ -58,8 +76,43 @@ pub fn printTree(tree: &Parser, output: &mut String, tab: &mut i32) {
 					printTree(right, output, tab);
 					*tab = *tab - 1;
 				}
+				Parser::IfValue(expr, s1, s2) => {
+					for _ in 0..*tab {
+						*output = format!("{}	", output);
+					}
+					
+					*output = format!("{}IF\n", output);
+					
+					*tab = *tab + 1;
+					
+					println!("{:?}", expr);
+					printTree(&expr, output, tab);
+					*tab = *tab - 1;
+					printTree(&s1, output, tab);
+					*tab = *tab - 1;
+					printTree(&s2, output, tab);
+					
+				}
 				_ => ()
 			}
+		}
+		
+		Parser::IfValue(expr, s1, s2) => {
+			for _ in 0..*tab {
+				*output = format!("{}	", output);
+			}
+			
+			*output = format!("{}IF\n", output);
+			
+			*tab = *tab + 1;
+			
+			println!("{:?}", expr);
+			printTree(&expr, output, tab);
+			*tab = *tab - 1;
+			printTree(&s1, output, tab);
+			*tab = *tab - 1;
+			printTree(&s2, output, tab);
+			
 		}
 		_ => ()
 	}
@@ -237,7 +290,46 @@ fn parse_assignment(tokens: &mut Vec<String>) -> Parser  {
 }
 
 fn parse_ifstatement(tokens: &mut Vec<String>) -> Parser  {
-	return Parser::PlaceHolder
+	// Check for if
+	let current_token = tokens.get(0);
+	
+	if current_token.is_none() || current_token.unwrap() != "if" {
+		
+		return Parser::PlaceHolder
+	}
+	
+	tokens.remove(0);
+	
+	let expression = parse_expression(tokens);
+	
+	let current_token = tokens.get(0);
+	
+	if current_token.is_none() || current_token.unwrap() != "then" {
+		
+		return Parser::PlaceHolder
+	}
+	
+	tokens.remove(0);
+	
+	let statement1 = parse_statement(tokens);
+	
+	let current_token = tokens.get(0);
+	
+	if current_token.is_none() || current_token.unwrap() != "else" {
+		
+		return Parser::PlaceHolder
+	}
+	
+	tokens.remove(0);
+	let statement2 = parse_statement(tokens);
+	
+	let current_token = tokens.get(0);
+	
+	if current_token.is_none() || current_token.unwrap() != "endif" {
+		return Parser::PlaceHolder
+	}
+	
+	return Parser::IfValue(Box::new(expression), Box::new(statement1), Box::new(statement2));
 }
 
 fn parse_whilestatement(tokens: &mut Vec<String>) -> Parser  {
