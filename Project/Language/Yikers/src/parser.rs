@@ -21,98 +21,6 @@ pub fn parse_tokens(tokens: &mut Vec<String>) -> Parser {
 }
 
 pub fn printTree(tree: &Parser, output: &mut String, tab: &mut i32) {
-	/* 
-	// Print with tabs in mind
-	for _ in 0..*tab {
-		*output = format!("{}	", output);
-	}
-	
-	match tree {
-		Parser::Tree(left, symbol, right) => {
-			*output = format!("{}{} : {}\n", output, symbol.variable, symbol.datatype);
-			
-			// Increment tab count
-			*tab = *tab + 1;
-			
-			// Handle Left
-			match left.as_ref() {
-				Parser::Value(val) => {
-					for _ in 0..*tab {
-						*output = format!("{}	", output);
-					}
-					*output = format!("{}{} : {}\n", output, val.variable, val.datatype);
-				}
-				Parser::Tree(_, _, _) => {
-					printTree(left, output, tab);
-					*tab = *tab - 1;
-				}
-				Parser::IfValue(expr, s1, s2) => {
-					for _ in 0..*tab {
-						*output = format!("{}	", output);
-					}
-					
-					*output = format!("{}IF\n", output);
-					
-					printTree(&expr, output, tab);
-					*tab = *tab - 1;
-					printTree(&s1, output, tab);
-					*tab = *tab - 1;
-					printTree(&s2, output, tab);
-					*tab = *tab - 1;
-					
-				}
-				_ => ()
-			}
-			
-			// Handle Right
-			match right.as_ref() {
-				Parser::Value(val) => {
-					for _ in 0..*tab {
-						*output = format!("{}	", output);
-					}
-					*output = format!("{}{} : {}\n", output, val.variable, val.datatype);
-				}
-				Parser::Tree(_, _, _) => {
-					printTree(right, output, tab);
-					*tab = *tab - 1;
-				}
-				Parser::IfValue(expr, s1, s2) => {
-					for _ in 0..*tab {
-						*output = format!("{}	", output);
-					}
-					
-					*output = format!("{}IF\n", output);
-					
-					*tab = *tab + 1;
-					
-					printTree(&expr, output, tab);
-					*tab = *tab - 1;
-					printTree(&s1, output, tab);
-					*tab = *tab - 1;
-					printTree(&s2, output, tab);
-					*tab = *tab - 1;
-					
-				}
-				_ => ()
-			}
-		}
-		
-		Parser::IfValue(expr, s1, s2) => {
-			*output = format!("{}IF\n", output);
-			
-			*tab = *tab + 1;
-			
-			println!("{:?}", expr);
-			printTree(&expr, output, tab);
-			*tab = *tab - 1;
-			printTree(&s1, output, tab);
-			*tab = *tab - 1;
-			printTree(&s2, output, tab);
-			
-		}
-		_ => ()
-	}
-	*/
 	// Perform tabbing on output
 	for _ in 0..*tab {
 		*output = format!("{}	", output);
@@ -158,7 +66,9 @@ pub fn printTree(tree: &Parser, output: &mut String, tab: &mut i32) {
 			}
 		}
 		
-		_ => ()
+		Parser::PlaceHolder => {
+			*output = "Error Reading Tree".to_string();
+		}
 	}
 }
 
@@ -397,41 +307,38 @@ fn parse_whilestatement(tokens: &mut Vec<String>) -> Parser  {
 		let current_token = tokens.get(0);
 		
 		if current_token.is_none() || current_token.unwrap() != "while" {
-			
-			return Parser::PlaceHolder
+			return Parser::PlaceHolder;
 		}
 		
 		tokens.remove(0);
 	}
-
+	
 	let expression = parse_expression(tokens);
-
+	
 	// Do
 	{
 		let current_token = tokens.get(0);
 		
 		if current_token.is_none() || current_token.unwrap() != "do" {
-			
-			return Parser::PlaceHolder
+			return Parser::PlaceHolder;
 		}
 		
 		tokens.remove(0);
 	}
-
+	
 	let statement = parse_statement(tokens);
-
+	
 	// Endwhile
-
 	{
 		let current_token = tokens.get(0);
 		
 		if current_token.is_none() || current_token.unwrap() != "endwhile" {
-			
-			return Parser::PlaceHolder
+			return Parser::PlaceHolder;
 		}
 		
 		tokens.remove(0);
 	}
+	
 	let data = Data {
 		variable: String::from("While"),
 		datatype: None
