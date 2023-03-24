@@ -58,8 +58,13 @@ fn main() {
     
     // Parser
     let mut parser_results = String::new();
-    let tree = parser::parse_tokens(&mut full_input_tokens);
+    let mut tree = parser::parse_tokens(&mut full_input_tokens);
+    if !full_input_tokens.is_empty() {
+        tree = parser::Parser::PlaceHolder;
+    }
     parser::printTree(&tree, &mut parser_results, &mut 0);
+    
+    
     output = format!("{}Parser:\n\n{}\n\n", output, parser_results);
     
     // Evaluator
