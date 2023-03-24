@@ -392,8 +392,52 @@ fn parse_ifstatement(tokens: &mut Vec<String>) -> Parser  {
 }
 
 fn parse_whilestatement(tokens: &mut Vec<String>) -> Parser  {
-	return Parser::PlaceHolder
+	// While
+	{
+		let current_token = tokens.get(0);
+		
+		if current_token.is_none() || current_token.unwrap() != "while" {
+			
+			return Parser::PlaceHolder
+		}
+		
+		tokens.remove(0);
+	}
+
+	let expression = parse_expression(tokens);
+
+	// Do
+	{
+		let current_token = tokens.get(0);
+		
+		if current_token.is_none() || current_token.unwrap() != "do" {
+			
+			return Parser::PlaceHolder
+		}
+		
+		tokens.remove(0);
+	}
+
+	let statement = parse_statement(tokens);
+
+	// Endwhile
+
+	{
+		let current_token = tokens.get(0);
+		
+		if current_token.is_none() || current_token.unwrap() != "endwhile" {
+			
+			return Parser::PlaceHolder
+		}
+		
+		tokens.remove(0);
+	}
+	let data = Data {
+		variable: String::from("While"),
+		datatype: None
+	};
 	
+	return Parser::Tree(Box::new(expression), data, Box::new(statement))
 }
 
 fn parse_expression(tokens: &mut Vec<String>) -> Parser {
