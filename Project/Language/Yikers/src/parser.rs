@@ -67,7 +67,7 @@ pub fn printTree(tree: &Parser, output: &mut String, tab: &mut i32) {
 		}
 		
 		Parser::PlaceHolder => {
-			*output = "Error Reading Tree".to_string();
+			*output = "Error Parsing Input".to_string();
 		}
 	}
 }
@@ -80,7 +80,6 @@ fn parse_statement(tokens: &mut Vec<String>) -> Parser {
 	}
 	
 	let mut tree = left.clone();
-	
 	
 	let current_token = tokens.get(0);
 	if current_token.is_none() {
@@ -119,56 +118,67 @@ fn parse_basestatement(tokens: &mut Vec<String>) -> Parser  {
 	
 	// Each check will return PlaceHolder if it doesn't apply
 	
-	// parse_assignment
-	
-	let assignment_result = parse_assignment(tokens);
-	
-	
-	match assignment_result {
-		Parser::PlaceHolder => (),
-		_ => {
-			return assignment_result;
-		}
-	}
-	
-	// parse_ifstatement
-	let if_result = parse_ifstatement(tokens);
-	
-	match if_result {
-		Parser::PlaceHolder => (),
-		_ => {
-			return if_result;
-		}
-	}
-	
-	// parse_whilestatement
-	let while_result = parse_whilestatement(tokens);
-	
-	match while_result {
-		Parser::PlaceHolder => (),
-		_ => {
-			return while_result;
-		}
-	}
-	
-	// skip
-	let current_token = tokens.get(0);
-	
-	if current_token.is_none() {
-		// edge case for empty string
-		return Parser::PlaceHolder
-	}
-	
-	if current_token.unwrap() == "skip" {
-		let data = Data {
-			variable: String::from("SKIP"),
-			datatype: Some(String::from("KEYWORD"))
-		};
+	// Attempt Assignment Parsing
+	{
+		let assignment_result = parse_assignment(tokens);
 		
-		return Parser::Value(data);
+		
+		match assignment_result {
+			Parser::PlaceHolder => (),
+			_ => {
+				return assignment_result;
+			}
+		}
 	}
 	
-	// if none are true return PlaceHolder
+	
+	// Attempt If Parsing
+	{
+		let if_result = parse_ifstatement(tokens);
+		
+		match if_result {
+			Parser::PlaceHolder => (),
+			_ => {
+				return if_result;
+			}
+		}
+	}
+	
+	
+	// Attempt While Parsing
+	{
+		let while_result = parse_whilestatement(tokens);
+		
+		match while_result {
+			Parser::PlaceHolder => (),
+			_ => {
+				return while_result;
+			}
+		}
+	}
+	
+	
+	// Attempt Skip Parsing
+	{
+		let current_token = tokens.get(0);
+		
+		if current_token.is_none() {
+			// edge case for empty string
+			return Parser::PlaceHolder
+		}
+		
+		if current_token.unwrap() == "skip" {
+			let data = Data {
+				variable: String::from("SKIP"),
+				datatype: Some(String::from("KEYWORD"))
+			};
+			
+			return Parser::Value(data);
+		}
+	}
+	
+	
+	// If none above work, return PlaceHolder
 	return Parser::PlaceHolder
 }
 
@@ -340,7 +350,7 @@ fn parse_whilestatement(tokens: &mut Vec<String>) -> Parser  {
 	}
 	
 	let data = Data {
-		variable: String::from("While"),
+		variable: String::from("WHILE"),
 		datatype: None
 	};
 	
@@ -365,9 +375,6 @@ fn parse_expression(tokens: &mut Vec<String>) -> Parser {
 	}
 	
 	let mut current_token = current_token.unwrap().clone();
-	
-	
-	
 	
 	while current_token == "+" {
 		tokens.remove(0);

@@ -2,8 +2,6 @@ mod scanner;
 mod parser;
 use std::io::BufRead;
 
-use parser::Parser;
-
 fn main() {
     let mut args = std::env::args();
     if args.len() != 3 {
@@ -19,6 +17,7 @@ fn main() {
     let mut full_input_tokens = Vec::new();
     
     // Scanner and Token list
+    output = format!("{}~~~Scanner~~~\n\n", output);
     for line in infile_lines {
         let line = line.unwrap();
         if line.replace(" ", "").is_empty() {
@@ -53,7 +52,7 @@ fn main() {
         full_input_tokens.append(&mut input_tokens);
         
         // Write Scanner Results to output
-        output = format!("{}Scanner:\n\n{}\n\n", output, scanner_results);
+        output = format!("{}{}\n\n", output, scanner_results);
     }
     
     // Parser
@@ -65,7 +64,7 @@ fn main() {
     parser::printTree(&tree, &mut parser_results, &mut 0);
     
     
-    output = format!("{}Parser:\n\n{}\n\n", output, parser_results);
+    output = format!("{}~~~Parser~~~\n\n{}\n\n", output, parser_results);
     
     // Evaluator
     
