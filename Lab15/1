@@ -1,0 +1,13 @@
+1.
+	a.
+		Since n has to be equal to an integer, n must be an integer
+		"call" must be an int because n is multiplied with a number, thus B must be an integer
+		int -> int
+	b.
+		The first call of g has input of call, the second call of g has input of α, thus the input of g has to be α
+			β = α -> β
+		The second call of g has a function output of α, thus the return type of g must be α
+			β = α -> α
+		The first call of the function f has an output of α, thus the function f must return α
+		
+		(α -> α) * α -> α
