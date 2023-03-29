@@ -1,0 +1,5 @@
+1.
+	Where
+		splitBy3 xs = [take asdf xs , drop asdf xs ] where asdf = ((length xs) `div` 3)
+	Let
+		splitBy3 xs = let asdf = ((length xs) `div` 3) in [take asdf xs , drop asdf xs ]

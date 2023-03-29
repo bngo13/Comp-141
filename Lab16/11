@@ -1,0 +1,7 @@
+11.
+	isSubstring :: String -> String -> Bool
+
+	isSubstring match@(x:xs) input@(front:back)
+		| input == "" = False
+		| match == subString 0 (length match - 1) input = True
+		| otherwise = isSubstring match (subString (findInd x back) (length input - 1) input)

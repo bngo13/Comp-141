@@ -1,0 +1,8 @@
+10.
+	subString :: Int -> Int -> String -> String
+
+	subString beginning end input
+		| beginning >= length input || end >= length input = ""
+		| beginning > end = ""
+		| beginning < 0 || end < 0 = ""
+		| otherwise = take (end - beginning + 1) (drop beginning input)

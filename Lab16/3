@@ -1,0 +1,5 @@
+3.
+	drop' number list = case (number, list) of 
+                         (_, []) -> []
+                         (0, _) -> list
+                         (number, x:xs) -> drop' (number - 1) xs

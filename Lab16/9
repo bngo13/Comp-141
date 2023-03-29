@@ -1,0 +1,11 @@
+9.
+	abbrevDecoder' :: String -> String
+
+	abbrevDecoder' abrv =
+		case abrv of
+			"LOL" -> "laughing out loud"
+			"IDK" -> "i don't know"
+			"BFF" -> "best friends forever"
+			"IMHO" -> "in my humble opinion"
+			"TMI" -> "too much information"
+			_ -> "unknown"

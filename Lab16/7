@@ -1,0 +1,8 @@
+7.
+	temp :: Double -> String
+
+	temp tmp
+		| tmp < 32 = "freezing"
+		| tmp < 50 && tmp >= 32 = "cold"
+		| tmp >= 50 && tmp < 75 = "mild"
+		| otherwise = "warm"

@@ -1,0 +1,8 @@
+6.
+	splitPair' :: [(a,b)] -> ([a],[b])
+
+	splitPair' list =
+		let a = [f | (f, _) <- list]
+			b = [g | (_, g) <- list]
+		in
+			(a,b)

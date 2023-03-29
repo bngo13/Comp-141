@@ -1,0 +1,7 @@
+5.
+	splitPair :: [(a,b)] -> ([a],[b])
+
+	splitPair list =
+		(a,b) 
+			where a = [f | (f, _) <- list]
+				b = [g | (_, g) <- list]

@@ -1,0 +1,10 @@
+8.
+	abbrevDecoder :: String -> String
+
+	abbrevDecoder abrv
+		| abrv == "LOL" = "laughing out loud"
+		| abrv == "IDK" = "i don't know"
+		| abrv == "BFF" = "best friends forever"
+		| abrv == "IMHO" = "in my humble opinion"
+		| abrv == "TMI" = "too much information"
+		| otherwise = "unknown"

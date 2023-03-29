@@ -1,0 +1,4 @@
+4.
+	cycle' list = case list of
+                [] -> error "empty list"
+                x:xs -> x: cycle' (xs ++ [x])

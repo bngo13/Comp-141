@@ -1,0 +1,77 @@
+1.
+	Where
+		splitBy3 xs = [take asdf xs , drop asdf xs ] where asdf = ((length xs) `div` 3)
+	Let
+		splitBy3 xs = let asdf = ((length xs) `div` 3) in [take asdf xs , drop asdf xs ]
+2.
+	multList2 list = case list of 
+                      [] -> [] 
+                      (x:xs) -> (x * 2) : (multList2 xs)
+3.
+	drop' number list = case (number, list) of 
+                         (_, []) -> []
+                         (0, _) -> list
+                         (number, x:xs) -> drop' (number - 1) xs
+4.
+	cycle' list = case list of
+                [] -> error "empty list"
+                x:xs -> x: cycle' (xs ++ [x])
+5.
+	splitPair :: [(a,b)] -> ([a],[b])
+
+	splitPair list =
+		(a,b) 
+			where a = [f | (f, _) <- list]
+				b = [g | (_, g) <- list]
+6.
+	splitPair' :: [(a,b)] -> ([a],[b])
+
+	splitPair' list =
+		let a = [f | (f, _) <- list]
+			b = [g | (_, g) <- list]
+		in
+			(a,b)
+7.
+	temp :: Double -> String
+
+	temp tmp
+		| tmp < 32 = "freezing"
+		| tmp < 50 && tmp >= 32 = "cold"
+		| tmp >= 50 && tmp < 75 = "mild"
+		| otherwise = "warm"
+8.
+	abbrevDecoder :: String -> String
+
+	abbrevDecoder abrv
+		| abrv == "LOL" = "laughing out loud"
+		| abrv == "IDK" = "i don't know"
+		| abrv == "BFF" = "best friends forever"
+		| abrv == "IMHO" = "in my humble opinion"
+		| abrv == "TMI" = "too much information"
+		| otherwise = "unknown"
+9.
+	abbrevDecoder' :: String -> String
+
+	abbrevDecoder' abrv =
+		case abrv of
+			"LOL" -> "laughing out loud"
+			"IDK" -> "i don't know"
+			"BFF" -> "best friends forever"
+			"IMHO" -> "in my humble opinion"
+			"TMI" -> "too much information"
+			_ -> "unknown"
+10.
+	subString :: Int -> Int -> String -> String
+
+	subString beginning end input
+		| beginning >= length input || end >= length input = ""
+		| beginning > end = ""
+		| beginning < 0 || end < 0 = ""
+		| otherwise = take (end - beginning + 1) (drop beginning input)
+11.
+	isSubstring :: String -> String -> Bool
+
+	isSubstring match@(x:xs) input@(front:back)
+		| input == "" = False
+		| match == subString 0 (length match - 1) input = True
+		| otherwise = isSubstring match (subString (findInd x back) (length input - 1) input)

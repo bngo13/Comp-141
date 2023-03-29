@@ -1,0 +1,4 @@
+2.
+	multList2 list = case list of 
+                      [] -> [] 
+                      (x:xs) -> (x * 2) : (multList2 xs)
