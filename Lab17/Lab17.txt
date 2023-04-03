@@ -1,0 +1,56 @@
+1.
+	Interpretation 1: zip takes in 2 lists and returns a list of tuples
+	Interpretation 2: zip takes in 1 list, then returns a function that takes in a list and returns a list of tuples
+2.
+	a
+		no
+	b
+		yes
+	c
+		no
+	d
+		yes
+	e
+		yes
+3.
+	a
+		(True:) takes in a list of Booleans, concatonates True to that list, and then returns a list of Booleans
+	b
+		(:[True,False]) will append an input Boolean into the list, [True,False], then return that list
+	c
+		(^4) will raise whatever input, that's a number, to the power of 4, then return that number.
+	d
+		(4^) will raise 4 to the power of whatever input is given, that's a number, then return the number
+4.
+	addOrSubtract bool
+		| bool == True = (+)
+		| bool == False = (-)
+5.
+	a
+		listlen :: [[a]] -> [Int]
+		listlen input = map (length) input
+	b
+		square :: [Int] -> [Int]
+	square input = map (^2) input
+6.
+	a
+		noSpace :: String -> String
+		noSpace input = filter (/= ' ') input
+	b
+		lenLT3 :: [[a]] -> [Int]
+		lenLT3 input = map (length) (filter (>3 . length) input)
+7.
+    listFunc :: [(a -> b -> c)] -> [a] -> [b] -> [c]
+    listFunc [] _ _ = []
+    listFunc _ [] _ = []
+    listFunc _ _ [] = []
+    listFunc (curFunc:func) (curIn1:in1) (curIn2:in2) = (curFunc curIn1 curIn2):(listFunc func in1 in2)
+8
+	addFunc3 :: (Num b) => (a -> b) -> (a -> b) -> (a -> b) -> a -> b
+	addFunc3 func1 func2 func3 input = (func1 input) + (func2 input) + (func3 input)
+9
+	modList :: Int -> [Int] -> [Int]
+	modList in1 in2 = map (`mod` 3) in2
+10
+	trimAlpha :: String -> String
+	trimAlpha input = filter ((not . (`elem` [x | x <- ['A'..'Z']] ++ [x | x <- ['a'..'z']]))) input

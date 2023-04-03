@@ -1,0 +1,3 @@
+9
+	modList :: Int -> [Int] -> [Int]
+	modList in1 in2 = map (`mod` 3) in2

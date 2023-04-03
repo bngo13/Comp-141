@@ -1,0 +1,7 @@
+6.
+	a
+		noSpace :: String -> String
+		noSpace input = filter (/= ' ') input
+	b
+		lenLT3 :: [[a]] -> [Int]
+		lenLT3 input = map (length) (filter (>3 . length) input)

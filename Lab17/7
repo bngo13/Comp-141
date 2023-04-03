@@ -1,0 +1,6 @@
+7.
+    listFunc :: [(a -> b -> c)] -> [a] -> [b] -> [c]
+    listFunc [] _ _ = []
+    listFunc _ [] _ = []
+    listFunc _ _ [] = []
+    listFunc (curFunc:func) (curIn1:in1) (curIn2:in2) = (curFunc curIn1 curIn2):(listFunc func in1 in2)

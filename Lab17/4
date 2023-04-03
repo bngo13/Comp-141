@@ -1,0 +1,4 @@
+4.
+	addOrSubtract bool
+		| bool == True = (+)
+		| bool == False = (-)

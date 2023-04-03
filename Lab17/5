@@ -1,0 +1,7 @@
+5.
+	a
+		listlen :: [[a]] -> [Int]
+		listlen input = map (length) input
+	b
+		square :: [Int] -> [Int]
+	square input = map (^2) input
