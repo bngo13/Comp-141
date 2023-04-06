@@ -1,0 +1,8 @@
+10.
+	fibList :: Integer -> [Integer]
+	fibList 0 = []
+	fibList n = fiboHelper [1, 0] (n-1)
+
+	fiboHelper :: [Integer] -> Integer -> [Integer]
+	fiboHelper acc 0 = (tail . reverse) acc
+	fiboHelper acc n = fiboHelper (head acc + head (tail acc):acc) (n-1)

@@ -1,0 +1,6 @@
+replicateTR :: Int -> a -> [a]
+replicateTR = replicateTRHelper []
+
+replicateTRHelper :: [a] -> Int -> a -> [a]
+replicateTRHelper acc 0 array = acc
+replicateTRHelper acc count array = replicateTRHelper (array:acc) (count - 1) array

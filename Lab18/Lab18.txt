@@ -1,0 +1,60 @@
+1.
+	a
+		(\x -> (x `mod` 7) == 0)
+	b
+		(\x y z-> x^2 + y^2 + z^2)
+2.
+	a.
+		filter even $ [1..100]
+	b.
+		negate $ succ $ if x == 0 then 1 else 0
+3.
+	a.
+		(negate . succ) (if x == 0 then 1 else 0)
+	b.
+		(filter even . map (3*)) [1..10]
+4.
+	sum' :: (Num a) => a -> [a] -> a
+	sum' acc [] = acc
+	sum' acc (x:xs) = sum' (acc + x) xs
+5.
+	cnct :: String -> [String] -> String
+	cnct acc [] = acc
+	cnct acc (x:xs) = cnct (acc ++ x) xs
+6.
+	appTR :: [a] -> [a] -> [a]
+	appTR = appTRHelper []
+
+	appTRHelper :: [a] -> [a] -> [a] -> [a]
+	appTRHelper acc [] (hl2:tl2) = appTRHelper (hl2:acc) [] tl2
+	appTRHelper acc _ [] = reverse acc
+	appTRHelper acc (hl1:tl1) word2 = appTRHelper (hl1:acc) tl1 word2
+7.
+	replicateTR :: Int -> a -> [a]
+	replicateTR = replicateTRHelper []
+
+	replicateTRHelper :: [a] -> Int -> a -> [a]
+	replicateTRHelper acc 0 array = acc
+	replicateTRHelper acc count array = replicateTRHelper (array:acc) (count - 1) array
+8.
+	mapTR :: (a -> b) -> [a] -> [b]
+	mapTR = mapTRHelper []
+
+	mapTRHelper :: [b] -> (a -> b) -> [a] -> [b]
+	mapTRHelper acc funct [] = reverse acc
+	mapTRHelper acc funct (x:xs) = mapTRHelper (funct x:acc) funct xs
+9.
+	maximum' :: [Int] -> Int
+	maximum' = maximum'Helper 0
+
+	maximum'Helper :: Int -> [Int] -> Int
+	maximum'Helper acc [] = acc
+	maximum'Helper acc (x:xs) = maximum'Helper (max x acc) xs
+10.
+	fibList :: Integer -> [Integer]
+	fibList 0 = []
+	fibList n = fiboHelper [1, 0] (n-1)
+
+	fiboHelper :: [Integer] -> Integer -> [Integer]
+	fiboHelper acc 0 = (tail . reverse) acc
+	fiboHelper acc n = fiboHelper (head acc + head (tail acc):acc) (n-1)

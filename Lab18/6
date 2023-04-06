@@ -1,0 +1,8 @@
+6.
+	appTR :: [a] -> [a] -> [a]
+	appTR = appTRHelper []
+
+	appTRHelper :: [a] -> [a] -> [a] -> [a]
+	appTRHelper acc [] (hl2:tl2) = appTRHelper (hl2:acc) [] tl2
+	appTRHelper acc _ [] = reverse acc
+	appTRHelper acc (hl1:tl1) word2 = appTRHelper (hl1:acc) tl1 word2

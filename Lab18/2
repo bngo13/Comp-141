@@ -1,0 +1,5 @@
+2.
+	a.
+		filter even $ [1..100]
+	b.
+		negate $ succ $ if x == 0 then 1 else 0
