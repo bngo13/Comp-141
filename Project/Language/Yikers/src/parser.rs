@@ -4,8 +4,8 @@ use std::boxed::Box;
 
 #[derive(Debug, Clone)]
 pub struct Data {
-	variable: String,
-	datatype: String
+	pub variable: String,
+	pub datatype: String
 }
 
 #[derive(Debug, Clone)]

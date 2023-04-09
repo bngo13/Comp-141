@@ -1,7 +1,9 @@
 mod scanner;
 mod parser;
-use std::io::BufRead;
+mod evaluator;
 
+use std::io::BufRead;
+use std::collections::VecDeque;
 use parser::Parser;
 
 fn main() {
@@ -63,6 +65,10 @@ fn main() {
         if !valid {
             break;
         }
+        
+        let mut eval_stack = VecDeque::new();
+        evaluator::evaluate_tree(&tree, &mut eval_stack);
+        output = format!("{}Output: {}\n\n", output, eval_stack.get(0).unwrap().variable);
     }
     
     write_output(output, args.nth(0).expect("No output file detected"));
