@@ -1,0 +1,10 @@
+6
+	a
+		data State = State {
+			name :: String,
+			population :: Int,
+			capital :: String
+		} deriving (Show)
+
+	b
+		california = State "California" 39240000 "Sacramento"

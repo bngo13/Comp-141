@@ -1,0 +1,5 @@
+2.
+	a
+		data Dog = Dog String String Int deriving (Show, Eq)
+	b
+		breed (Dog _ b _) = b

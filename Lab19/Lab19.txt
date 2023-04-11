@@ -1,0 +1,110 @@
+1.
+	a
+		data Day = Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday
+	b
+		workday input
+			| input == Monday = True
+			| input == Tuesday = True
+			| input == Wednesday = True
+			| input == Thursday = True
+			| input == Friday = True
+			| otherwise = False
+2.
+	a
+		data Dog = Dog String String Int deriving (Show, Eq)
+	b
+		breed (Dog _ b _) = b
+3.
+	data Dog = Dog {
+		name :: String,
+		breed :: String,
+		age :: Int
+	}
+4.
+	tailScuff :: [a] -> Maybe [a]
+
+	tailScuff [] = Nothing
+	tailScuff (x:xs) = Just xs
+5
+	a
+		Node 4
+			(
+				Node 3
+				(Emptree)
+				(Emptree)
+			)
+			(
+				Node 5
+				(Emptree)
+				(Emptree)
+			)
+	b
+		multree :: Btree Double -> Double
+		multree (Node double Emptree Emptree) = double
+		multree (Node double left right) = double * (multree left) * (multree right)
+	c
+		makeBST :: (Ord a) => [a] -> Btree a
+		makeBST [x] = Node x (Emptree) (Emptree)
+		makeBST (x:xs) = treeInsert x (makeBST xs)
+6
+	a
+		data State = State {
+			name :: String,
+			population :: Int,
+			capital :: String
+		} deriving (Show)
+
+	b
+		california = State "California" 39240000 "Sacramento"
+7.
+	data Btree a = Emptree | Node a (Btree a) (Btree a) deriving (Show, Read, Eq, Ord)
+
+	preorder :: Btree a -> [a]
+	preorder Emptree = []
+	preorder (Node a left right) = a: ((preorder left) ++ (preorder right))
+
+	testTree = (Node 5 (Node 6 Emptree (Node 7 Emptree Emptree )) (Node 8 Emptree Emptree))
+8
+	heightTree :: Btree a -> Int
+	heightTree Emptree = -1
+	heightTree (Node _ left right) = if 1  + (heightTree left) > 1  + (heightTree right) then 1  + (heightTree left) else 1  + (heightTree right)
+9.
+	minimumTree :: (Ord a) => Btree a -> a
+	minimumTree (Node leaf (Node left Emptree Emptree) Emptree) = if leaf < left then leaf else left
+	minimumTree (Node leaf Emptree (Node right Emptree Emptree)) = if leaf < right then leaf else right
+	minimumTree (Node leaf Emptree Emptree) = leaf
+	minimumTree (Node leaf left right) = let leftVal = minimumTree left
+											rightVal = minimumTree right
+										in
+											if leaf < leftVal && leaf < rightVal then leaf
+																				else if leftVal < leaf && leftVal < rightVal then leftVal
+																															else rightVal
+10
+	maximumTree :: (Ord a) => Btree a -> a
+	maximumTree (Node a Emptree Emptree) = a
+	maximumTree (Node a l Emptree) = 
+		if a > lMax then a
+		else lMax
+		where lMax = maximumTree l
+	maximumTree (Node a Emptree r) = 
+		if a > rMax then a
+		else rMax
+		where rMax = maximumTree r
+	maximumTree (Node a l r) = 
+		if a > lMax && a > rMax then a
+		else if lMax > rMax then lMax
+		else rMax
+		where lMax = maximumTree l
+			rMax = maximumTree r
+11.
+	isBST :: (Ord a) => Btree a -> Bool
+	isBST Emptree = True
+	isBST (Node val Emptree Emptree) = True
+	isBST (Node val (Node leftVal Emptree Emptree) (Emptree)) = leftVal < val
+	isBST (Node val (Emptree) (Node rightVal Emptree Emptree)) = val > rightVal
+	isBST (Node val (Node left lleft lright) (Node right rleft rright)) = (isBST lleft) && isBST lright && isBST rleft && (isBST rright) && val > left && val < right
+12.
+	a
+		data Tree a = EmptyTree | NodeTree a [Tree a]
+	b
+		asdf = NodeTree 1 [NodeTree 5 [NodeTree 2 [EmptyTree]], NodeTree 8 [EmptyTree], NodeTree 7 [NodeTree 3 [EmptyTree], NodeTree 4 [EmptyTree]]]

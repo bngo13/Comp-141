@@ -1,0 +1,4 @@
+8
+	heightTree :: Btree a -> Int
+	heightTree Emptree = -1
+	heightTree (Node _ left right) = if 1  + (heightTree left) > 1  + (heightTree right) then 1  + (heightTree left) else 1  + (heightTree right)

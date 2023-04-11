@@ -1,0 +1,8 @@
+7.
+	data Btree a = Emptree | Node a (Btree a) (Btree a) deriving (Show, Read, Eq, Ord)
+
+	preorder :: Btree a -> [a]
+	preorder Emptree = []
+	preorder (Node a left right) = a: ((preorder left) ++ (preorder right))
+
+	testTree = (Node 5 (Node 6 Emptree (Node 7 Emptree Emptree )) (Node 8 Emptree Emptree))

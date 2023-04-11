@@ -1,0 +1,11 @@
+1.
+	a
+		data Day = Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday
+	b
+		workday input
+			| input == Monday = True
+			| input == Tuesday = True
+			| input == Wednesday = True
+			| input == Thursday = True
+			| input == Friday = True
+			| otherwise = False

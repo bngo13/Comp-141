@@ -1,0 +1,21 @@
+5
+	a
+		Node 4
+			(
+				Node 3
+				(Emptree)
+				(Emptree)
+			)
+			(
+				Node 5
+				(Emptree)
+				(Emptree)
+			)
+	b
+		multree :: Btree Double -> Double
+		multree (Node double Emptree Emptree) = double
+		multree (Node double left right) = double * (multree left) * (multree right)
+	c
+		makeBST :: (Ord a) => [a] -> Btree a
+		makeBST [x] = Node x (Emptree) (Emptree)
+		makeBST (x:xs) = treeInsert x (makeBST xs)
