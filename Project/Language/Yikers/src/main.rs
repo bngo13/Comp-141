@@ -1,6 +1,10 @@
 mod scanner;
 mod parser;
+mod evaluator;
+
 use std::io::BufRead;
+use std::collections::HashMap;
+use std::collections::VecDeque;
 
 fn main() {
     let mut args = std::env::args();
@@ -67,7 +71,13 @@ fn main() {
     output = format!("{}~~~Parser~~~\n\n{}\n\n", output, parser_results);
     
     // Evaluator
+    let mut value_map: HashMap<String, i32> = HashMap::new();
+    let mut value_stack: VecDeque<parser::Data> = VecDeque::new();
     
+    evaluator::eval_tree(&tree, &mut value_stack, &mut value_map);
+    println!("{:?}", value_map);
+    
+    // Write Output
     write_output(output, args.nth(0).expect("No output file detected"));
 }
 
