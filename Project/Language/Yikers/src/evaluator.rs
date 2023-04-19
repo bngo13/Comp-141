@@ -5,6 +5,12 @@ use std::collections::HashMap;
 pub fn eval_tree(tree: &Parser, stack: &mut VecDeque<Data>, valuemap: &mut HashMap<String, i32>) {
 	match tree {
 		Parser::Tree(left, symbol, right) => {
+			// While Handling
+			if symbol.datatype.is_none() {
+				handle_while(&left, &right, valuemap);
+				return;
+			}
+			
 			stack.push_front(symbol.clone());
 			
 			// Parse Left
@@ -58,6 +64,26 @@ pub fn eval_tree(tree: &Parser, stack: &mut VecDeque<Data>, valuemap: &mut HashM
 		}
 		Parser::PlaceHolder => ()
 	}
+}
+
+fn handle_while(checkstatement: &Box<Parser>, whilestatement: &Box<Parser>, valuemap: &mut HashMap<String, i32>) {
+	// Condition Checking
+	let mut loop_stack: VecDeque<Data> = VecDeque::new();
+	eval_tree(checkstatement, &mut loop_stack, &mut valuemap.clone());
+	
+	while 
+		loop_stack.get(0).is_some() && loop_stack.get(0).unwrap().variable.parse::<i32>().unwrap() != 0 
+		{
+			
+			println!("{:?}", loop_stack);
+			// Eval while statement tree
+			eval_tree(whilestatement, &mut VecDeque::new(), valuemap);
+			
+			// Test for looping condition
+			loop_stack.clear();
+			eval_tree(checkstatement, &mut loop_stack, &mut valuemap.clone());
+		}
+		
 }
 
 fn handle_math(stack: &mut VecDeque<Data>, valuemap: &mut HashMap<String, i32>) {
