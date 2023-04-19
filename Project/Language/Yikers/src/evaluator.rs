@@ -12,30 +12,42 @@ pub fn eval_tree(tree: &Parser, stack: &mut VecDeque<Data>, valuemap: &mut HashM
 			
 			/* Result of left side */
 			
-			{ // Do Math Stuff
-				if (stack.get(0).is_some() && stack.get(0).unwrap().datatype.clone().is_some() && (stack.get(0).unwrap().datatype.clone().unwrap() == "IDENTIFIER" || stack.get(0).unwrap().datatype.clone().unwrap() == "NUMBER")) && (stack.get(1).is_some() && stack.get(1).unwrap().datatype.clone().is_some() && (stack.get(1).unwrap().datatype.clone().unwrap() == "IDENTIFIER" || stack.get(1).unwrap().datatype.clone().unwrap() == "NUMBER")) && (symbol.variable == "+" || symbol.variable == "-" || symbol.variable == "*" || symbol.variable == "/") {
-				handle_math(stack, valuemap);
+			{ // Do Math Stuff if math stuff applies
+				if 
+					(stack.get(0).is_some() && stack.get(0).unwrap().datatype.clone().is_some() && (stack.get(0).unwrap().datatype.clone().unwrap() == "IDENTIFIER" || stack.get(0).unwrap().datatype.clone().unwrap() == "NUMBER")) && 
+					(stack.get(1).is_some() && stack.get(1).unwrap().datatype.clone().is_some() && (stack.get(1).unwrap().datatype.clone().unwrap() == "IDENTIFIER" || stack.get(1).unwrap().datatype.clone().unwrap() == "NUMBER")) && 
+					(symbol.variable == "+" || symbol.variable == "-" || symbol.variable == "*" || symbol.variable == "/") {
+					handle_math(stack, valuemap);
+				}
 			}
-			}
+			
+			
 			
 			// Parse Right
 			eval_tree(right, stack, valuemap);
 			
 			{ // Do Math Stuff
 				if (stack.get(0).is_some() && stack.get(0).unwrap().datatype.clone().is_some() && (stack.get(0).unwrap().datatype.clone().unwrap() == "IDENTIFIER" || stack.get(0).unwrap().datatype.clone().unwrap() == "NUMBER")) && (stack.get(1).is_some() && stack.get(1).unwrap().datatype.clone().is_some() && (stack.get(1).unwrap().datatype.clone().unwrap() == "IDENTIFIER" || stack.get(1).unwrap().datatype.clone().unwrap() == "NUMBER")) && (symbol.variable == "+" || symbol.variable == "-" || symbol.variable == "*" || symbol.variable == "/") {
-				println!("{:?}", stack);
-				handle_math(stack, valuemap);
-				println!("{:?}", stack);
-			}
+					handle_math(stack, valuemap);
+				}
 			}
 			
 			if symbol.variable == ":=".to_string() {
-				handle_setter(tree, stack, valuemap)
+				handle_setter(stack, valuemap)
 			}
 			// Result of right side
 		}
 		Parser::IfValue(ifstatement, truestatement, falsestatement) => {
+			let mut ifstack: VecDeque<Data> = VecDeque::new();
+			let mut ifvaluemap: HashMap<String, i32> = HashMap::new(); // Throwaway variable just in case something gets set
 			
+			eval_tree(&ifstatement, &mut ifstack, &mut ifvaluemap);
+			
+			if ifstack.pop_front().unwrap().variable == String::from("0") {
+				eval_tree(truestatement, stack, valuemap)
+			} else {
+				eval_tree(falsestatement, stack, valuemap)
+			}
 		}
 		Parser::Value(terminal) => {
 			if stack.get(0).unwrap().variable == "Error".to_string() {
@@ -85,7 +97,6 @@ fn handle_math(stack: &mut VecDeque<Data>, valuemap: &mut HashMap<String, i32>) 
 		num2 = elem.unwrap().variable.parse().unwrap();
 	}
 	stack.pop_front();
-	println!("{} {}", num1, num2);
 	//println!("{:?}", stack);
 	
 	let mut result = 0;
@@ -108,12 +119,10 @@ fn handle_math(stack: &mut VecDeque<Data>, valuemap: &mut HashMap<String, i32>) 
 	}
 	
 	stack.pop_front();
-	
-	//println!("{:?}", stack);
 	stack.push_front(Data { variable: result.to_string(), datatype: Some("NUMBER".to_string()) });
 }
 
-fn handle_setter(tree: &Parser, stack: &mut VecDeque<Data>, valuemap: &mut HashMap<String, i32>) {
+fn handle_setter(stack: &mut VecDeque<Data>, valuemap: &mut HashMap<String, i32>) {
 	let identifier = stack.get(1).unwrap().clone().variable;
 	
 	let value;
