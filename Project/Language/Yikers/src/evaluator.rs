@@ -43,16 +43,16 @@ pub fn eval_tree(tree: &Parser, stack: &mut VecDeque<Data>, valuemap: &mut HashM
 			}
 			// Result of right side
 		}
-		Parser::IfValue(ifstatement, truestatement, falsestatement) => {
+		Parser::IfValue(ifcondition, ifstatement, elsestatement) => {
 			let mut ifstack: VecDeque<Data> = VecDeque::new();
-			let mut ifvaluemap: HashMap<String, i32> = HashMap::new(); // Throwaway variable just in case something gets set
 			
-			eval_tree(&ifstatement, &mut ifstack, &mut ifvaluemap);
+			// Evaluate if condition
+			eval_tree(&ifcondition, &mut ifstack, valuemap);
 			
 			if ifstack.pop_front().unwrap().variable == String::from("0") {
-				eval_tree(truestatement, stack, valuemap)
+				eval_tree(ifstatement, stack, valuemap)
 			} else {
-				eval_tree(falsestatement, stack, valuemap)
+				eval_tree(elsestatement, stack, valuemap)
 			}
 		}
 		Parser::Value(terminal) => {
@@ -114,6 +114,7 @@ fn handle_math(stack: &mut VecDeque<Data>, valuemap: &mut HashMap<String, i32>) 
 		let val = valuemap.get(&elem.unwrap().variable.clone());
 		
 		if val.is_none() {
+			println!("{:?}", elem);
 			println!("TODO2")
 		}
 		let val = val.unwrap();
