@@ -68,7 +68,7 @@ fn main() {
     parser::printTree(&tree, &mut parser_results, &mut 0);
     
     
-    output = format!("{}~~~Parser~~~\n\n{}\n\n", output, parser_results);
+    output = format!("{}~~~Parser~~~\n\n{}\n", output, parser_results);
     
     // Evaluator
     let mut value_map: HashMap<String, i32> = HashMap::new();
@@ -76,6 +76,12 @@ fn main() {
     
     evaluator::eval_tree(&tree, &mut value_stack, &mut value_map);
     println!("{:?}", value_map);
+    
+    output = format!("{}~~~Evaluator~~~\n\nOutput:\n", output);
+    
+    for value in value_map {
+        output = format!("{}{}: {}\n", output, value.0, value.1)
+    }
     
     // Write Output
     write_output(output, args.nth(0).expect("No output file detected"));

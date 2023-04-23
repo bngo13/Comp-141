@@ -1,20 +1,7 @@
-z := 69;
-
-while 1 do
-	if 1 then
-		if 2 then
-			z := 5;
-			f := 1;
-		else
-			z := 12;
-			f := 15;
-		endif;
-		x := 12;
-	else
-		z := 2;
-		x := 5
-	endif;
-	x := 15
-endwhile;
-
-z := 69;
+z := 0;
+x := 3;
+y := 0;
+while x-y do
+	z := z + y;
+	y := y + 1
+endwhile
