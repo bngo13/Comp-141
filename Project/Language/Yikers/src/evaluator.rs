@@ -11,10 +11,18 @@ pub fn eval_tree(tree: &Parser, stack: &mut VecDeque<Data>, valuemap: &mut HashM
 				return;
 			}
 			
+			/* Start Evaluation */
+			
 			stack.push_front(symbol.clone());
 			
-			// Parse Left
+			/* Evaluate Left */
+			
 			eval_tree(left, stack, valuemap);
+			
+			// Check for error
+			if stack.get(0).is_some() && stack.get(0).unwrap().variable == "Error".to_string() {
+				return
+			}
 			
 			/* Result of left side */
 			
@@ -27,10 +35,13 @@ pub fn eval_tree(tree: &Parser, stack: &mut VecDeque<Data>, valuemap: &mut HashM
 				}
 			}
 			
-			
-			
-			// Parse Right
+			/* Evaluate Right */
 			eval_tree(right, stack, valuemap);
+			
+			// Check for error
+			if stack.get(0).is_some() && stack.get(0).unwrap().variable == "Error".to_string() {
+				return
+			}
 			
 			{ // Do Math Stuff
 				if (stack.get(0).is_some() && stack.get(0).unwrap().datatype.clone().is_some() && (stack.get(0).unwrap().datatype.clone().unwrap() == "IDENTIFIER" || stack.get(0).unwrap().datatype.clone().unwrap() == "NUMBER")) && (stack.get(1).is_some() && stack.get(1).unwrap().datatype.clone().is_some() && (stack.get(1).unwrap().datatype.clone().unwrap() == "IDENTIFIER" || stack.get(1).unwrap().datatype.clone().unwrap() == "NUMBER")) && (symbol.variable == "+" || symbol.variable == "-" || symbol.variable == "*" || symbol.variable == "/") {
@@ -38,10 +49,11 @@ pub fn eval_tree(tree: &Parser, stack: &mut VecDeque<Data>, valuemap: &mut HashM
 				}
 			}
 			
+			/* Evaluate Setters */
+			
 			if symbol.variable == ":=".to_string() {
 				handle_setter(stack, valuemap)
 			}
-			// Result of right side
 		}
 		Parser::IfValue(ifcondition, ifstatement, elsestatement) => {
 			let mut ifstack: VecDeque<Data> = VecDeque::new();
@@ -49,9 +61,12 @@ pub fn eval_tree(tree: &Parser, stack: &mut VecDeque<Data>, valuemap: &mut HashM
 			// Evaluate if condition
 			eval_tree(&ifcondition, &mut ifstack, valuemap);
 			
+			// Run whichever tree corresponds to condition
 			if ifstack.pop_front().unwrap().variable == String::from("0") {
+				// If condition is met
 				eval_tree(ifstatement, stack, valuemap)
 			} else {
+				// If condition is not met (else is enacted)
 				eval_tree(elsestatement, stack, valuemap)
 			}
 		}
@@ -74,7 +89,6 @@ fn handle_while(checkstatement: &Box<Parser>, whilestatement: &Box<Parser>, valu
 	while 
 		loop_stack.get(0).is_some() && loop_stack.get(0).unwrap().variable.parse::<i32>().unwrap() != 0 
 		{
-			
 			println!("{:?}", loop_stack);
 			// Eval while statement tree
 			eval_tree(whilestatement, &mut VecDeque::new(), valuemap);
@@ -97,7 +111,20 @@ fn handle_math(stack: &mut VecDeque<Data>, valuemap: &mut HashMap<String, i32>) 
 		let val = valuemap.get(&elem.unwrap().variable.clone());
 		
 		if val.is_none() {
-			println!("TODO1")
+			print!("
+main::evaluator::handle_math
+Code Portion: Evaluate First Value
+Stack : {:?}
+ValMap: {:?}", 
+					stack, valuemap);
+			// If val is not found in expression, error out
+			stack.clear();
+			let error = Data {
+				variable: "Error".to_string(),
+				datatype: None
+			};
+			stack.push_front(error);
+			return
 		}
 		let val = val.unwrap();
 		
@@ -114,8 +141,20 @@ fn handle_math(stack: &mut VecDeque<Data>, valuemap: &mut HashMap<String, i32>) 
 		let val = valuemap.get(&elem.unwrap().variable.clone());
 		
 		if val.is_none() {
-			println!("{:?}", elem);
-			println!("TODO2")
+			print!("
+main::evaluator::handle_math
+Code Portion: Evaluate Second Value
+Stack : {:?}
+ValMap: {:?}", 
+					stack, valuemap);
+			// If val is not found in expression, error out
+			stack.clear();
+			let error = Data {
+				variable: "Error".to_string(),
+				datatype: None
+			};
+			stack.push_front(error);
+			return
 		}
 		let val = val.unwrap();
 		
@@ -150,7 +189,27 @@ fn handle_math(stack: &mut VecDeque<Data>, valuemap: &mut HashMap<String, i32>) 
 }
 
 fn handle_setter(stack: &mut VecDeque<Data>, valuemap: &mut HashMap<String, i32>) {
-	let identifier = stack.get(1).unwrap().clone().variable;
+	let identifier = {
+		let identifier = stack.get(1);
+		
+		if identifier.is_none() {
+			print!("
+main::evaluator::handle_setter
+Code Portion: Grab Identifier from stack
+Stack : {:?}
+ValMap: {:?}", 
+					stack, valuemap);
+			
+			stack.clear();
+			let error = Data {
+				variable: "Error".to_string(),
+				datatype: None
+			};
+			stack.push_front(error);
+			return
+		}
+		identifier.unwrap().clone().variable
+	};
 	
 	let value;
 	
@@ -160,8 +219,21 @@ fn handle_setter(stack: &mut VecDeque<Data>, valuemap: &mut HashMap<String, i32>
 		
 		// Return invalid some
 		if value1.is_none() {
-			println!("TODO")
-		}
+			print!("
+main::evaluator::handle_setter
+Code Portion: Grab value of identifier
+Stack : {:?}
+ValMap: {:?}", 
+					stack, valuemap);
+			
+			stack.clear();
+			let error = Data {
+				variable: "Error".to_string(),
+				datatype: None
+			};
+			stack.push_front(error);
+			return
+		}	
 		
 		value = *value1.unwrap();
 	} else {
