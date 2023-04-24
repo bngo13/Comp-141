@@ -71,7 +71,7 @@ pub fn eval_tree(tree: &Parser, stack: &mut VecDeque<Data>, valuemap: &mut HashM
 			}
 		}
 		Parser::Value(terminal) => {
-			if stack.get(0).unwrap().variable == "Error".to_string() {
+			if stack.get(0).is_some() && stack.get(0).unwrap().variable == "Error".to_string() {
 				return
 			}
 			
@@ -86,16 +86,38 @@ fn handle_while(checkstatement: &Box<Parser>, whilestatement: &Box<Parser>, valu
 	let mut loop_stack: VecDeque<Data> = VecDeque::new();
 	eval_tree(checkstatement, &mut loop_stack, &mut valuemap.clone());
 	
-	while 
-		loop_stack.get(0).is_some() && loop_stack.get(0).unwrap().variable.parse::<i32>().unwrap() != 0 
+	if loop_stack.get(0).is_some() && loop_stack.get(0).unwrap().datatype.is_some() && loop_stack.get(0).unwrap().clone().datatype.unwrap() == "IDENTIFIER".to_string() {
+		let value = valuemap.get(&loop_stack.get(0).unwrap().clone().variable).unwrap();
+		loop_stack.pop_front().unwrap();
+		
+		let data = Data {
+			variable: value.to_string(),
+			datatype: Some("NUMBER".to_string())
+		};
+		
+		loop_stack.push_front(data);
+	}
+	
+	while loop_stack.get(0).is_some() && loop_stack.get(0).unwrap().variable.parse::<i32>().unwrap() != 0 
 		{
-			println!("{:?}", loop_stack);
 			// Eval while statement tree
 			eval_tree(whilestatement, &mut VecDeque::new(), valuemap);
 			
 			// Test for looping condition
 			loop_stack.clear();
 			eval_tree(checkstatement, &mut loop_stack, &mut valuemap.clone());
+			
+			if loop_stack.get(0).is_some() && loop_stack.get(0).unwrap().datatype.is_some() && loop_stack.get(0).unwrap().clone().datatype.unwrap() == "IDENTIFIER".to_string() {
+				let value = valuemap.get(&loop_stack.get(0).unwrap().clone().variable).unwrap();
+				loop_stack.pop_front().unwrap();
+				
+				let data = Data {
+					variable: value.to_string(),
+					datatype: Some("NUMBER".to_string())
+				};
+				
+				loop_stack.push_front(data);
+			}
 		}
 		
 }
