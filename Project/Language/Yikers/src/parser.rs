@@ -160,24 +160,21 @@ fn parse_basestatement(tokens: &mut Vec<String>) -> Parser  {
 	
 	// Attempt Skip Parsing
 	{
-		let current_token = tokens.get(0);
-		
+		let current_token = tokens.get(0).clone();
 		if current_token.is_none() {
 			// edge case for empty string
 			return Parser::PlaceHolder
 		}
 		
-		if current_token.unwrap() == "skip" {
+		if current_token.unwrap().trim() == "skip" {
 			let data = Data {
 				variable: String::from("SKIP"),
 				datatype: Some(String::from("KEYWORD"))
 			};
-			
+			tokens.remove(0);
 			return Parser::Value(data);
 		}
 	}
-	
-	
 	// If none above work, return PlaceHolder
 	return Parser::PlaceHolder
 }
