@@ -101,7 +101,12 @@ fn handle_while(checkstatement: &Box<Parser>, whilestatement: &Box<Parser>, valu
 	while loop_stack.get(0).is_some() && loop_stack.get(0).unwrap().variable.parse::<i32>().unwrap() != 0 
 		{
 			// Eval while statement tree
-			eval_tree(whilestatement, &mut VecDeque::new(), valuemap);
+			let mut result_queue = VecDeque::new();
+			eval_tree(whilestatement, &mut result_queue, valuemap);
+			
+			if result_queue.get(0).is_some() && result_queue.get(0).unwrap().variable == "SKIP".to_string() {
+				break
+			}
 			
 			// Test for looping condition
 			loop_stack.clear();
