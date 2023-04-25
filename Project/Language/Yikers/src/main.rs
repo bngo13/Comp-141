@@ -29,7 +29,7 @@ fn main() {
         }
         
         let mut scanner_results = String::new();
-        scanner_results.push_str(&format!("Line: {}", line));
+        scanner_results.push_str(&format!("Line: {}", line.trim()));
         let mut valid = true;
         let mut tmp_tokens = Vec::new();
         let mut input_tokens = scanner::parse_token(line);
@@ -75,7 +75,6 @@ fn main() {
     let mut value_stack: VecDeque<parser::Data> = VecDeque::new();
     
     evaluator::eval_tree(&tree, &mut value_stack, &mut value_map);
-    println!("{:?}", value_map);
     
     output = format!("{}~~~Evaluator~~~\n\nOutput:\n", output);
     
