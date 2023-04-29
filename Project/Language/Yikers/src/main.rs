@@ -76,11 +76,17 @@ fn main() {
     
     evaluator::eval_tree(&tree, &mut value_stack, &mut value_map);
     
-    output = format!("{}~~~Evaluator~~~\n\nOutput:\n", output);
+    output = format!("{}~~~Evaluator~~~\n\n", output);
     
-    for value in value_map {
-        output = format!("{}{}: {}\n", output, value.0, value.1)
+    if value_stack.get(0).is_some() && value_stack.get(0).unwrap().variable == "Error" {
+        output = format!("{}Error in evaluator!\n", output);
+    } else {
+        for value in value_map {
+            output = format!("{}{}: {}\n", output, value.0, value.1)
+        }
     }
+    
+    
     
     // Write Output
     write_output(output, args.nth(0).expect("No output file detected"));
