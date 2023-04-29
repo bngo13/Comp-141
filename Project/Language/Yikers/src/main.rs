@@ -65,11 +65,12 @@ fn main() {
     if !full_input_tokens.is_empty() {
         tree = parser::Parser::PlaceHolder;
     }
-    parser::printTree(&tree, &mut parser_results, &mut 0);
     
+    let treecpy = tree.clone();
+    
+    parser::printTree(&mut tree, &treecpy, &mut parser_results, &mut 0);
     
     output = format!("{}~~~Parser~~~\n\n{}\n", output, parser_results);
-    
     // Evaluator
     let mut value_map: HashMap<String, i32> = HashMap::new();
     let mut value_stack: VecDeque<parser::Data> = VecDeque::new();

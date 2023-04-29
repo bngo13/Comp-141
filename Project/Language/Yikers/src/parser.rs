@@ -20,7 +20,7 @@ pub fn parse_tokens(tokens: &mut Vec<String>) -> Parser {
 	parse_statement(tokens)
 }
 
-pub fn printTree(tree: &Parser, output: &mut String, tab: &mut i32) {
+pub fn printTree(origtree: &mut Parser, tree: &Parser, output: &mut String, tab: &mut i32) {
 	// Perform tabbing on output
 	for _ in 0..*tab {
 		*output = format!("{}	", output);
@@ -38,10 +38,10 @@ pub fn printTree(tree: &Parser, output: &mut String, tab: &mut i32) {
 			*tab += 1;
 			
 			// Recursively Parse Left Tree
-			printTree(&left, output, tab);
+			printTree(origtree, &left, output, tab);
 			
 			// Recursively Parse Right Tree
-			printTree(&right, output, tab);
+			printTree(origtree, &right, output, tab);
 			
 			*tab -= 1;
 		}
@@ -51,9 +51,9 @@ pub fn printTree(tree: &Parser, output: &mut String, tab: &mut i32) {
 			
 			*tab += 1;
 			
-			printTree(&expr, output, tab);
-			printTree(&s1, output, tab);
-			printTree(&s2, output, tab);
+			printTree(origtree, &expr, output, tab);
+			printTree(origtree, &s1, output, tab);
+			printTree(origtree, &s2, output, tab);
 			
 			*tab -= 1;
 		}
@@ -67,7 +67,9 @@ pub fn printTree(tree: &Parser, output: &mut String, tab: &mut i32) {
 		}
 		
 		Parser::PlaceHolder => {
-			*output = "Error Parsing Input".to_string();
+			*output = "Error Parsing Input\n".to_string();
+			*origtree = Parser::PlaceHolder
+			
 		}
 	}
 }
@@ -93,7 +95,7 @@ fn parse_statement(tokens: &mut Vec<String>) -> Parser {
 		
 		match right {
 			Parser::PlaceHolder => {
-				return tree
+				return Parser::PlaceHolder
 				
 			}
 			_ => ()
